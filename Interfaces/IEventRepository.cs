@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Interfaces
+{
+    public interface IEventRepository<TEntity>
+    {
+        IEnumerable<TEntity> GetAllEvent();
+        TEntity GetOneEvent(int eventId);
+        IEnumerable<TEntity> GetAllByUser(int userId);
+        TEntity GetOneByUser(int userId, int eventId);
+    }
+}
