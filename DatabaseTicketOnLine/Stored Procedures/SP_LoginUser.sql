@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [TicketOnLineApp].[SP_LoginUser]
+﻿CREATE PROCEDURE [dbo].[SP_LoginUser]
 	@Email nvarchar(384),
 	@Passwd nvarchar(20)
 AS

@@ -59,17 +59,17 @@
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures" />
     <Folder Include="Functions" />
-    <Folder Include="Schemas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\User.sql" />
     <Build Include="Stored Procedures\SP_RegisterUser.sql" />
     <Build Include="Stored Procedures\SP_LoginUser.sql" />
-    <Build Include="Schemas\TicketOnLineApp.sql" />
     <Build Include="Functions\GetPreSalt.sql" />
     <Build Include="Functions\GetPostSalt.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DatabaseTicketOnLine.publish.xml" />
+    <Build Include="Tables\Event.sql" />
+    <Build Include="Stored Procedures\SP_CreateEvent.sql" />
+    <Build Include="Stored Procedures\SP_UpdateEvent.sql" />
+    <Build Include="Stored Procedures\SP_DeleteEvent.sql" />
+    <Build Include="Stored Procedures\SP_DeleteUser.sql" />
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Api_ASPCore.Models.Services;
 using Forms;
 using Global;
 using Interfaces;
@@ -21,7 +22,7 @@ namespace Api_ASPCore.Controllers
 
         public AuthController()
         {
-            _authRepository = new AuthRepository();
+            _authRepository = new AuthService();
         }
 
         [Route("api/auth/register/")]

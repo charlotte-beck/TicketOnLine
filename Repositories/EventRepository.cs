@@ -34,13 +34,13 @@ namespace Repositories
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public IEnumerable<Event> GetAllEvent()
+        public List<Event> GetAllEvent()
         {
             HttpResponseMessage responseMessage = _httpClient.GetAsync("event/getall/").Result;
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<G.Event[]>(json).Select(ev => ev.ToClient());
+            return JsonConvert.DeserializeObject<G.Event[]>(json).Select(ev => ev.ToClient()).ToList();
         }
         public Event GetOneEvent(int eventId)
         {
@@ -66,6 +66,34 @@ namespace Repositories
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<G.Event>(json)?.ToClient();
+        }
+
+        public Event CreateEvent(Event entity)
+        {
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(entity));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            HttpResponseMessage responseMessage = _httpClient.PostAsync($"event/", content).Result;
+            responseMessage.EnsureSuccessStatusCode();
+
+            string json = responseMessage.Content.ReadAsStringAsync().Result;
+            G.Event newEvent = JsonConvert.DeserializeObject<G.Event>(json);
+            return newEvent.ToClient();
+        }
+
+        public void UpdateEvent(int eventId, Event entity)
+        {
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(entity));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            HttpResponseMessage responseMessage = _httpClient.PutAsync($"event/{eventId}", content).Result;
+            responseMessage.EnsureSuccessStatusCode();
+        }
+
+        public void DeleteEvent(int eventId)
+        {
+            HttpResponseMessage responseMessage = _httpClient.DeleteAsync($"event/{eventId}").Result;
+            responseMessage.EnsureSuccessStatusCode();
         }
     }
 }

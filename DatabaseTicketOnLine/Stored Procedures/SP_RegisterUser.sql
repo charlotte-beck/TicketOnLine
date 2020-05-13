@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [TicketOnLineApp].[SP_RegisterUser]
+﻿CREATE PROCEDURE [dbo].[SP_RegisterUser]
 	@LastName nvarchar(75),
 	@FirstName nvarchar(75),
 	@Email nvarchar(384),

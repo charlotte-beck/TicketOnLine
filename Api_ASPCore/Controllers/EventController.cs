@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api_ASPCore.Models.Services;
 using Global;
 using Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +18,13 @@ namespace Api_ASPCore.Controllers
 
         public EventController()
         {
-            _eventRepository = new EventRepository();
+            _eventRepository = new EventService();
         }
 
         // GET: api/Event
         [Route("api/Event/GetAllEvent")]
         [HttpGet]
-        public IEnumerable<Event> GetAll()
+        public List<Event> GetAll()
         {
             return _eventRepository.GetAllEvent();
         }
