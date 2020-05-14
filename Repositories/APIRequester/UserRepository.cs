@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using Global;
+using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository<User>
     {
         private readonly HttpClient _httpClient;
 

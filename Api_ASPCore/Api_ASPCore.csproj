@@ -11,14 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\Forms\Forms.csproj" />
     <ProjectReference Include="..\Global\Global.csproj" />
     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Data\Forms\" />
+    <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>
 
 

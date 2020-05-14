@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿using Api_ASPCore.Models.Data;
+using Interfaces;
+using Repositories.GlobalRepositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,31 +11,16 @@ using System.Threading.Tasks;
 
 namespace Api_ASPCore.Repository.Services
 {
-    public class UserService : IUserRepository
+    public class UserService : IUserRepository<User>
     {
-        private static IUserRepository _instance;
-        public static IUserRepository Instance
+        private static IUserRepository<User> _instance;
+        public static IUserRepository<User> Instance
         {
-            get
-            {
-                return _instance ?? (_instance = new UserService());
-            }
-        }
-
-        private SqlConnection _connection;
-        public UserService()
-        {
-            _connection = new SqlConnection(
-                ConfigurationManager.ConnectionStrings["DatabaseTicketOnLine"].ConnectionString);
-            _connection.Open();
+            get { return _instance ?? (_instance = new UserService()); }
         }
         public void DeleteUser(int userId)
         {
-            SqlCommand command = _connection.CreateCommand();
-            command.CommandText = "dbo.SP_DeleteUser";
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("UserId", userId);
-            command.ExecuteNonQuery();
+            UserRepository_Global.Instance.DeleteUser(userId);
         }
     }
 }

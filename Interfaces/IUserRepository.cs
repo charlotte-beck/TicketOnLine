@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository<TEntity>
     {
         void DeleteUser(int userId);
     }

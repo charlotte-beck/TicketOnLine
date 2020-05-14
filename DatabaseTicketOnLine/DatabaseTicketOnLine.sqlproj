@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{c6d8320b-bdd3-4ab1-ade8-40789bd83db2}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -71,5 +71,10 @@
     <Build Include="Stored Procedures\SP_UpdateEvent.sql" />
     <Build Include="Stored Procedures\SP_DeleteEvent.sql" />
     <Build Include="Stored Procedures\SP_DeleteUser.sql" />
+    <Build Include="Stored Procedures\SP_GetEvents.sql" />
+    <Build Include="Stored Procedures\SP_GetEvent.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DatabaseTicketOnLine.publish.xml" />
   </ItemGroup>
 </Project>

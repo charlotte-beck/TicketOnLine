@@ -1,4 +1,4 @@
-﻿using PresentationMVVM_WPFCore.ViewModels.ViewModelBase;
+﻿using PresentationMVVM_WPFCore.ViewModels.ViewModelsBase;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

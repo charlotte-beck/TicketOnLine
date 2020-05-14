@@ -35,4 +35,4 @@ namespace PresentationMVVM_WPFCore.Utils.Command
 
     }
 }
-}
+

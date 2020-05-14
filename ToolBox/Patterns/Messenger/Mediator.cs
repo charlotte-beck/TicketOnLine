@@ -64,4 +64,4 @@ namespace ToolBox.Patterns.Messenger
         }
     }
 }
-}
+

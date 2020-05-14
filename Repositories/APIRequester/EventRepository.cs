@@ -1,4 +1,4 @@
-﻿using Data;
+﻿
 using G = Global;
 using Interfaces;
 using Newtonsoft.Json;
@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
 using System.Text;
-using Repositories.Mappers;
+using Global;
 
 namespace Repositories
 {
@@ -40,7 +40,8 @@ namespace Repositories
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<G.Event[]>(json).Select(ev => ev.ToClient()).ToList();
+
+            return null; //JsonConvert.DeserializeObject<G.Event[]>(json).Select(ev => ev.ToClient()).ToList();
         }
         public Event GetOneEvent(int eventId)
         {
@@ -48,15 +49,15 @@ namespace Repositories
             responseMessage.EnsureSuccessStatusCode();
             
             string json = responseMessage.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<G.Event>(json)?.ToClient();
+            return null; // JsonConvert.DeserializeObject<G.Event>(json)?.ToClient();
         }
-        public IEnumerable<Event> GetAllByUser(int userId)
+        public List<Event> GetAllByUser(int userId)
         {
             HttpResponseMessage responseMessage = _httpClient.GetAsync($"event/getbyuserid/{userId}").Result;
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<G.Event[]>(json).Select(ev => ev.ToClient());
+            return null; // JsonConvert.DeserializeObject<G.Event[]>(json).Select(ev => ev.ToClient());
         }
 
         public Event GetOneByUser(int userId, int eventId)
@@ -65,10 +66,10 @@ namespace Repositories
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<G.Event>(json)?.ToClient();
+            return null; // JsonConvert.DeserializeObject<G.Event>(json)?.ToClient();
         }
 
-        public Event CreateEvent(Event entity)
+        public void CreateEvent(Event entity)
         {
             HttpContent content = new StringContent(JsonConvert.SerializeObject(entity));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -78,7 +79,7 @@ namespace Repositories
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
             G.Event newEvent = JsonConvert.DeserializeObject<G.Event>(json);
-            return newEvent.ToClient();
+            // newEvent.ToClient();
         }
 
         public void UpdateEvent(int eventId, Event entity)
@@ -95,5 +96,7 @@ namespace Repositories
             HttpResponseMessage responseMessage = _httpClient.DeleteAsync($"event/{eventId}").Result;
             responseMessage.EnsureSuccessStatusCode();
         }
+
+
     }
 }

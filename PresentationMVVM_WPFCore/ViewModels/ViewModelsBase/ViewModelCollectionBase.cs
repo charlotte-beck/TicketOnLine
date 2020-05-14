@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
-namespace PresentationMVVM_WPFCore.ViewModels.ViewModelBase
+namespace PresentationMVVM_WPFCore.ViewModels.ViewModelsBase
 {
     public abstract class ViewModelCollectionBase<TViewModel> : ViewModelBase
         where TViewModel : ViewModelBase

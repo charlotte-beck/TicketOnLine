@@ -9,7 +9,7 @@
 		CONSTRAINT DF_User_Admin DEFAULT (0),
 	IsActive BIT NOT NULL
 		CONSTRAINT DF_User_Active DEFAULT (1),
-	CONSTRAINT [PK_User] PRIMARY KEY ([UserID]),
+	CONSTRAINT [PK_User] PRIMARY KEY ([UserId]),
 	CONSTRAINT [UK_User_Email] UNIQUE (Email)
 
 )

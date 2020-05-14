@@ -4,13 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Api_ASPCore.Models.Services;
+using Api_ASPCore.Models.Mappers;
+using Api_ASPCore.Repository.Services;
 using Forms;
 using Global;
 using Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Repositories.GlobalRepositories;
 
 namespace Api_ASPCore.Controllers
 {
@@ -18,7 +20,7 @@ namespace Api_ASPCore.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        IAuthRepository<RegisterForm, LoginForm, User> _authRepository;
+        private AuthService _authRepository;
 
         public AuthController()
         {
@@ -57,7 +59,7 @@ namespace Api_ASPCore.Controllers
             {
                 try
                 {
-                    User user = _authRepository.Login(loginForm);
+                    User user = _authRepository.Login(loginForm).ToGlobal();
 
                     if (user is null)
                     {

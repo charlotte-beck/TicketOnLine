@@ -8,9 +8,9 @@ namespace Interfaces
     {
         List<TEntity> GetAllEvent();
         TEntity GetOneEvent(int eventId);
-        IEnumerable<TEntity> GetAllByUser(int userId);
+        List<TEntity> GetAllByUser(int userId);
         TEntity GetOneByUser(int userId, int eventId);
-        TEntity CreateEvent(TEntity entity);
+        void CreateEvent(TEntity entity);
         void UpdateEvent(int eventId, TEntity entity);
         void DeleteEvent(int eventId);
     }
