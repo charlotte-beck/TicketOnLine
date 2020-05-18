@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PresentationMVVM_WPFCore.Models
+namespace Repositories.Data
 {
     public class Event
     {
