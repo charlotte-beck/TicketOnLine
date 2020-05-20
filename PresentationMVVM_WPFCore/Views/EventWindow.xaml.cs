@@ -10,14 +10,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PresentationMVVM_WPFCore
+namespace PresentationMVVM_WPFCore.Views
 {
     /// <summary>
-    /// Logique d'interaction pour EventDetailsWindow.xaml
+    /// Logique d'interaction pour EventWindow.xaml
     /// </summary>
-    public partial class EventDetailsWindow : Window
+    public partial class EventWindow : Window
     {
-        public EventDetailsWindow()
+        public EventWindow()
         {
             InitializeComponent();
         }

@@ -8,10 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\" />
+    <ProjectReference Include="..\ToolBox\ToolBox.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,37 +8,37 @@ namespace PresentationMVVM_WPFCore.ViewModels.ViewModelsBase
     public abstract class ViewModelCollectionBase<TViewModel> : ViewModelBase
         where TViewModel : ViewModelBase
     {
-        private ObservableCollection<TViewModel> _viewModels;
-        public ObservableCollection<TViewModel> ViewModels
+        private ObservableCollection<TViewModel> _items;
+        public ObservableCollection<TViewModel> Items
         {
             get
             {
-                return _viewModels ?? (_viewModels = LoadItems());
+                return _items ?? (_items = LoadItems());
             }
             set
             {
-                if (_viewModels != value)
+                if (_items != value)
                 {
-                    _viewModels = value;
-                    RaisePropertyChanged(nameof(ViewModels));
+                    _items = value;
+                    RaisePropertyChanged(nameof(Items));
                 }
             }
         }
 
-        private TViewModel _selection;
-        public TViewModel Selection
+        private TViewModel _selectedItem;
+        public TViewModel SelectedItem
         {
             get
             {
-                return _selection;
+                return _selectedItem;
             }
 
             set
             {
-                if (_selection != value)
+                if (_selectedItem != value)
                 {
-                    _selection = value;
-                    RaisePropertyChanged(nameof(Selection));
+                    _selectedItem = value;
+                    RaisePropertyChanged(nameof(SelectedItem));
                 }
             }
         }
