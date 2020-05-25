@@ -16,6 +16,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="9*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Content="Event"/>
             <DataGrid Grid.Row="1" 
@@ -43,6 +44,7 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Grid.Row="3" Content="Ajouter un event" FontFamily="Segoe UI Symbol" Command="{Binding ToAddCommand}" />
         </Grid>
         <Grid Grid.Column="1">
             <Grid.Resources>

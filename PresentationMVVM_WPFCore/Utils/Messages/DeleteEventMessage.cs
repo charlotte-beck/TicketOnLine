@@ -7,9 +7,9 @@ namespace PresentationMVVM_WPFCore.Utils.Messages
 {
     public class DeleteEventMessage
     {
-        public EventViewModel ViewModel { get; private set; }
+        public EventDetailViewModel ViewModel { get; private set; }
 
-        public DeleteEventMessage(EventViewModel viewModel)
+        public DeleteEventMessage(EventDetailViewModel viewModel)
         {
             ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         }

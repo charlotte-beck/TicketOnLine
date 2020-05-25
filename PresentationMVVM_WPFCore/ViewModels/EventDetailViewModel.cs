@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls.Primitives;
 using Interfaces;
 using PresentationMVVM_WPFCore.Utils.Command;
 using PresentationMVVM_WPFCore.Utils.Messages;
@@ -12,7 +13,7 @@ using ToolBox.Patterns.Messenger;
 
 namespace PresentationMVVM_WPFCore.ViewModels
 {
-    public class EventDetailViewModel : ViewModelBase
+    public class EventDetailViewModel : EntityViewModelBase<Event>
     {
         #region Properties
         private string _eventName;
@@ -108,36 +109,25 @@ namespace PresentationMVVM_WPFCore.ViewModels
             }
         }
         #endregion
-        private Event _entity;
+
         private EventRepository _eventRepository;
-        public EventDetailViewModel(Event entity)
+        public EventDetailViewModel(Event entity) : base(entity)
         {
-            _entity = entity ?? throw new ArgumentNullException(nameof(entity));
+            EventName = Entity.EventName;
+            EventType = Entity.EventType;
+            EventDescription = Entity.EventDescription;
+            EventOrg = Entity.EventOrg;
+            EventLocation = Entity.EventLocation;
+            EventDate = Entity.EventDate;
+            EventPrice = Entity.EventPrice;
+        }
+        public int EventId
+        {
+            get { return Entity.EventId; }
         }
 
         #region Command
-        private RelayCommand _addCommand;
-        public RelayCommand AddCommand
-        {
-            get
-            {
-                return _addCommand ?? (_addCommand = new RelayCommand(Add));
-            }
-        }
-        private void Add()
-        {
-            Event e = new Event
-            {
-                EventType = _entity.EventType,
-                EventName = _entity.EventName,
-                EventDescription = _entity.EventDescription,
-                EventOrg = _entity.EventOrg,
-                EventLocation = _entity.EventLocation,
-                EventDate = _entity.EventDate,
-                EventPrice = _entity.EventPrice
-            };
-            _eventRepository.CreateEvent(e);
-        }
+        
 
         private RelayCommand _deleteCommand;
         public RelayCommand DeleteCommand
@@ -149,8 +139,8 @@ namespace PresentationMVVM_WPFCore.ViewModels
         }
         private void Delete()
         {
-            _eventRepository.DeleteEvent(_entity.EventId);
-            //Messenger<DeleteEventMessage>.Instance.Send(new DeleteEventMessage());
+            _eventRepository.DeleteEvent(EventId);
+            Messenger<DeleteEventMessage>.Instance.Send(new DeleteEventMessage(this));
         }
 
         private RelayCommand _detailsCommand;
@@ -163,29 +153,56 @@ namespace PresentationMVVM_WPFCore.ViewModels
         }
         private void ShowDetails()
         {
-            _eventRepository.GetOneEvent(_entity.EventId);
+            _eventRepository.GetOneEvent(EventId);
         }
 
-        //public void Details()
+        //private RelayCommand _updateCommand;
+        //public RelayCommand UpdateCommand
         //{
-        //    EventDetailsWindow dw = new EventDetailsWindow();
-        //    dw.DataContext = this;
-
-        //    dw.Show();
+        //    get
+        //    {
+        //        return _updateCommand ?? (_updateCommand = new RelayCommand(UpdateEvent, CanUpdate));
+        //    }
         //}
+        //public bool CanUpdate()
+        //{
+        //    return EventName != Entity.EventName
+        //        || EventType != Entity.EventType
+        //        || EventDescription != Entity.EventDescription
+        //        || EventOrg != Entity.EventOrg
+        //        || EventLocation != Entity.EventLocation
+        //        || EventDate != Entity.EventDate
+        //        || EventPrice != Entity.EventPrice;
+        //}
+        //public void UpdateEvent()
+        //{
+        //    string oldName = Entity.EventName;
+        //    string oldType = Entity.EventType;
+        //    string oldDescription = Entity.EventDescription;
+        //    string oldOrg = Entity.EventOrg;
+        //    string oldLocation = Entity.EventLocation;
+        //    DateTime oldDate = Entity.EventDate;
+        //    double oldPrice = Entity.EventPrice;
 
-        private RelayCommand _updateCommand;
-        public RelayCommand UpdateCommand
-        {
-            get
-            {
-                return _updateCommand ?? (_updateCommand = new RelayCommand(UpdateEvent));
-            }
-        }
-        public void UpdateEvent()
-        {
-            _eventRepository.UpdateEvent(_entity.EventId, _entity);
-        }
+        //    Entity.EventName = EventName;
+        //    Entity.EventType = EventType;
+        //    Entity.EventDescription = EventDescription;
+        //    Entity.EventOrg = EventOrg;
+        //    Entity.EventLocation = EventLocation;
+        //    Entity.EventDate = EventDate;
+        //    Entity.EventPrice = EventPrice;
+
+        //    if (!_eventRepository.UpdateEvent(EventId, Entity))
+        //    {
+        //        Entity.EventName = oldName;
+        //        Entity.EventType = oldType;
+        //        Entity.EventDescription = oldDescription;
+        //        Entity.EventOrg = oldOrg;
+        //        Entity.EventLocation = oldLocation;
+        //        Entity.EventDate = oldDate;
+        //        Entity.EventPrice = oldPrice;
+        //    }
+        //}
         #endregion
     }
 }

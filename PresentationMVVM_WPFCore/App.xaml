@@ -4,7 +4,9 @@
              xmlns:local="clr-namespace:PresentationMVVM_WPFCore"
              xmlns:vm="clr-namespace:PresentationMVVM_WPFCore.ViewModels"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
         <vm:EventViewModel x:Key="Event"/>
+        <vm:MainViewModel x:Key="Main"/>
     </Application.Resources>
 </Application>
