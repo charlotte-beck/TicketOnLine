@@ -12,6 +12,8 @@ namespace PresentationMVVM_WPFCore.Utils.Command
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
 
+
+
         public RelayCommand(Action execute, Func<bool> canExecute = null)
         {
             _execute = (!(execute is null)) ? execute : throw new InvalidOperationException();
@@ -28,11 +30,15 @@ namespace PresentationMVVM_WPFCore.Utils.Command
             _execute();
         }
 
+        void ICommand.RaiseCanExecuteChanged()
+        {
+            RaiseCanExecuteChanged();
+        }
+
         internal void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
-
     }
 }
 

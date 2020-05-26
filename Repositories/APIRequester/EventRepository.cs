@@ -37,7 +37,7 @@ namespace Repositories
 
         public IEnumerable<Event> GetAllEvent()
         {
-            HttpResponseMessage responseMessage = _httpClient.GetAsync("event/getall/").Result;
+            HttpResponseMessage responseMessage = _httpClient.GetAsync("event/").Result;
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;

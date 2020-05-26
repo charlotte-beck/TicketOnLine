@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls.Primitives;
-using Interfaces;
-using PresentationMVVM_WPFCore.Utils.Command;
-using PresentationMVVM_WPFCore.Utils.Messages;
+﻿using PresentationMVVM_WPFCore.Utils.Command;
 using PresentationMVVM_WPFCore.ViewModels.ViewModelsBase;
 using PresentationMVVM_WPFCore.Views;
 using Repositories;
 using Repositories.Data;
-using ToolBox.Patterns.Messenger;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace PresentationMVVM_WPFCore.ViewModels
 {
-    public class EventDetailViewModel : EntityViewModelBase<Event>
+    public class AddEventViewModel : ViewModelBase
     {
         #region Properties
         private string _eventName;
@@ -111,51 +107,48 @@ namespace PresentationMVVM_WPFCore.ViewModels
         #endregion
 
         private EventRepository _eventRepository;
-        public EventDetailViewModel(Event entity) : base(entity)
+
+
+        public AddEventViewModel()
         {
-            EventName = Entity.EventName;
-            EventType = Entity.EventType;
-            EventDescription = Entity.EventDescription;
-            EventOrg = Entity.EventOrg;
-            EventLocation = Entity.EventLocation;
-            EventDate = Entity.EventDate;
-            EventPrice = Entity.EventPrice;
             _eventRepository = new EventRepository("https://localhost:5001/api/");
-        }
-        public int EventId
-        {
-            get { return Entity.EventId; }
+
         }
 
-        #region Command
-        
-
-        private RelayCommand _deleteCommand;
-        public RelayCommand DeleteCommand
+        private ICommand _addCommand;
+        public ICommand AddCommand
         {
             get
             {
-                return _deleteCommand ?? (_deleteCommand = new RelayCommand(Delete));
+                return _addCommand ?? (_addCommand = new RelayCommand(Add, CanAdd));
             }
-        }
-        private void Delete()
-        {
-            _eventRepository.DeleteEvent(EventId);
-            Messenger<DeleteEventMessage>.Instance.Send(new DeleteEventMessage(this));
         }
 
-        private RelayCommand _detailsCommand;
-        public RelayCommand DetailsCommand
+        private bool CanAdd()
         {
-            get
-            {
-                return _detailsCommand ?? (_detailsCommand = new RelayCommand(ShowDetails));
-            }
+            return !string.IsNullOrWhiteSpace(EventName)
+                && !string.IsNullOrWhiteSpace(EventType)
+                && !string.IsNullOrWhiteSpace(EventDescription)
+                && !string.IsNullOrWhiteSpace(EventOrg)
+                && !string.IsNullOrWhiteSpace(EventLocation)
+                && !string.IsNullOrEmpty(EventDate.ToString())
+                && !string.IsNullOrWhiteSpace(EventPrice.ToString());
         }
-        private void ShowDetails()
+
+        private void Add()
         {
-            _eventRepository.GetOneEvent(EventId);
-        }        
-        #endregion
+            Event e = new Event
+            {
+                EventName = EventName,
+                EventType = EventType,
+                EventDescription = EventDescription,
+                EventOrg = EventOrg,
+                EventLocation = EventLocation,
+                EventDate = EventDate,
+                EventPrice = EventPrice
+            };
+            _eventRepository.CreateEvent(e);
+            //Items.Add(new EventDetailViewModel(e));
+        }
     }
 }

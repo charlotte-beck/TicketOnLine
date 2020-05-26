@@ -55,10 +55,11 @@ namespace Api_ASPCore.Controllers
         //}
 
         //POST: api/Event
-       //[HttpPost]
-       // public void Post([FromBody] string value)
-       // {
-       // }
+        [HttpPost]
+        public void Post([FromBody] Event entity)
+        {
+            _eventRepository.CreateEvent(entity);
+        }
 
         //PUT: api/Event/5
         //[HttpPut("{id}")]
@@ -67,9 +68,10 @@ namespace Api_ASPCore.Controllers
         //}
 
         //DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public void Delete(int eventId)
+        {
+            _eventRepository.DeleteEvent(eventId);
+        }
     }
 }

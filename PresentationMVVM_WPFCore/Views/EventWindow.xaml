@@ -86,7 +86,7 @@
             <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding EventLocation}"/>
             <Label Grid.Column="0" Grid.Row="6" Content="Price"/>
             <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding EventPrice}"/>
-            <Button Grid.Column ="0" Grid.Row="7" Content="Update" Grid.ColumnSpan="2" Command="{Binding UpdateCommand}"/>
+            <Button Grid.Column ="0" Grid.Row="7" Content="Update" Grid.ColumnSpan="2" />
 
         </Grid>
     </Grid>

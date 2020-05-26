@@ -44,7 +44,7 @@ namespace PresentationMVVM_WPFCore.ViewModels
         public void GoToEventSection()
         {
             EventWindow eventWindow = new EventWindow();
-            eventWindow.DataContext = this;
+            //eventWindow.DataContext = this;
             eventWindow.Show();
         }
     }

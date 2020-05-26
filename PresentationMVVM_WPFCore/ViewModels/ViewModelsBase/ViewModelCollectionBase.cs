@@ -11,10 +11,10 @@ namespace PresentationMVVM_WPFCore.ViewModels.ViewModelsBase
         private ObservableCollection<TViewModel> _items;
         public ObservableCollection<TViewModel> Items
         {
-            get
-            {
-                return _items ?? (_items = LoadItems());
-            }
+            //get
+            //{
+            //    //return _items ?? (_items = LoadItems());
+            //}
             set
             {
                 if (_items != value)
@@ -43,6 +43,6 @@ namespace PresentationMVVM_WPFCore.ViewModels.ViewModelsBase
             }
         }
 
-        protected abstract ObservableCollection<TViewModel> LoadItems();
+        //protected abstract ObservableCollection<TViewModel> LoadItems();
     }
 }
