@@ -111,7 +111,7 @@ namespace PresentationMVVM_WPFCore.ViewModels
 
         public AddEventViewModel()
         {
-            _eventRepository = new EventRepository("https://localhost:5001/api/");
+            _eventRepository = new EventRepository("http://localhost:56586/api/");
 
         }
 

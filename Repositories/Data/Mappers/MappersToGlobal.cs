@@ -1,15 +1,15 @@
-﻿using System;
+﻿using g = Global;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using G = Global;
 
 namespace Repositories.Data.Mappers
 {
-    public static class MappersToClient
+    public static class MappersToGlobal
     {
-        internal static Event ToClient(this G.Event e)
+        internal static g.Event ToGlobal(this Event e)
         {
-            return new Event
+            return new g.Event
             {
                 EventId = e.EventId,
                 EventType = e.EventType,
@@ -20,11 +20,6 @@ namespace Repositories.Data.Mappers
                 EventLocation = e.EventLocation,
                 EventPrice = e.EventPrice
             };
-        }
-
-        internal static User ToClient(this G.User u)
-        {
-            return new User(u.UserId, u.FirstName, u.LastName, u.Email, u.Passwd, u.IsActive, u.IsAdmin);
         }
     }
 }

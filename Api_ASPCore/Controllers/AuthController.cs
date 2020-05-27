@@ -4,15 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Api_ASPCore.Models;
 using Api_ASPCore.Models.Mappers;
 using Api_ASPCore.Repository.Services;
-using Forms;
 using Global;
 using Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Repositories.GlobalRepositories;
 
 namespace Api_ASPCore.Controllers
 {

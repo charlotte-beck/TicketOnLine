@@ -120,69 +120,25 @@ namespace PresentationMVVM_WPFCore.ViewModels
 
         public EventViewModel()
         {
-            _eventRepository = new EventRepository("https://localhost:5001/api/");
-            //Messenger<EventDetailViewModel>.Instance.Register("EventDelete", OnDeleteEvent);
+            _eventRepository = new EventRepository("http://localhost:56586/api/");
+            Messenger<EventDetailViewModel>.Instance.Register("EventDelete", OnDeleteEvent);
         }
-        //private void OnDeleteEvent(EventDetailViewModel instance)
-        //{
-        //    Items.Remove(instance);
-        //}
+        private void OnDeleteEvent(EventDetailViewModel instance)
+        {
+            Items.Remove(instance);
+        }
 
-        //protected override ObservableCollection<EventDetailViewModel> LoadItems()
-        //{
-        //    ObservableCollection<EventDetailViewModel> events =
-        //        new ObservableCollection<EventDetailViewModel>(_eventRepository.GetAllEvent()
-        //        .Select(x => new EventDetailViewModel(x)));
-        //    return events;
-        //}
+        protected override ObservableCollection<EventDetailViewModel> LoadItems()
+        {
+            ObservableCollection<EventDetailViewModel> events =
+                new ObservableCollection<EventDetailViewModel>(_eventRepository.GetAllEvent()
+                .Select(x => new EventDetailViewModel(x)));
+            return events;
+        }
 
-        //private RelayCommand _updateCommand;
-        //public RelayCommand UpdateCommand
-        //{
-        //    get
-        //    {
-        //        return _updateCommand ?? (_updateCommand = new RelayCommand(UpdateEvent, CanUpdate));
-        //    }
-        //}
-        //public bool CanUpdate()
-        //{
-        //    return EventName != _entity.EventName
-        //        || EventType !=_entity.EventType
-        //        || EventDescription != _entity.EventDescription
-        //        || EventOrg != _entity.EventOrg
-        //        || EventLocation != _entity.EventLocation
-        //        || EventDate != _entity.EventDate
-        //        || EventPrice != _entity.EventPrice;
-        //}
-        //public void UpdateEvent()
-        //{
-        //    string oldName = _entity.EventName;
-        //    string oldType = _entity.EventType;
-        //    string oldDescription = _entity.EventDescription;
-        //    string oldOrg = _entity.EventOrg;
-        //    string oldLocation = _entity.EventLocation;
-        //    DateTime oldDate = _entity.EventDate;
-        //    double oldPrice = _entity.EventPrice;
 
-        //    _entity.EventName = EventName;
-        //    _entity.EventType = EventType;
-        //    _entity.EventDescription = EventDescription;
-        //    _entity.EventOrg = EventOrg;
-        //    _entity.EventLocation = EventLocation;
-        //    _entity.EventDate = EventDate;
-        //    _entity.EventPrice = EventPrice;
 
-        //    //if (!_eventRepository.UpdateEvent(EventId, _entity))
-        //    //{
-        //    //    _entity.EventName = oldName;
-        //    //    _entity.EventType = oldType;
-        //    //    _entity.EventDescription = oldDescription;
-        //    //    _entity.EventOrg = oldOrg;
-        //    //    _entity.EventLocation = oldLocation;
-        //    //    _entity.EventDate = oldDate;
-        //    //    _entity.EventPrice = oldPrice;
-        //    //}
-        //}
+        #region Redirect to AddEvent Command
 
         private RelayCommand _toAddCommand;
         public RelayCommand ToAddCommand
@@ -198,8 +154,6 @@ namespace PresentationMVVM_WPFCore.ViewModels
             //addEventWindow.DataContext = this;
             addEventWindow.Show();
         }
-
-        
-         
+        #endregion
     }
 }

@@ -38,7 +38,7 @@
         <Label Grid.Column="0" Grid.Row="1" Content="Type"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding EventType, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="2" Content="Date"/>
-        <DatePicker SelectedDate="05/25/2020" Grid.Column="1" Grid.Row="2" Text="{Binding EventDate, UpdateSourceTrigger=PropertyChanged}"/>
+        <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding EventDate, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="3" Content="Description"/>
         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding EventDescription, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="4" Content="Organisation"/>

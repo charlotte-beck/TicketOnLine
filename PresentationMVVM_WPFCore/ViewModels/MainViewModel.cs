@@ -37,7 +37,7 @@ namespace PresentationMVVM_WPFCore.ViewModels
         public void GoToUserSection()
         {
             UserWindow userWindow = new UserWindow();
-            userWindow.DataContext = this;
+            //userWindow.DataContext = this;
             userWindow.Show();
         }
 

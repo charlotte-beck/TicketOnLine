@@ -70,26 +70,27 @@ namespace Repositories
             return JsonConvert.DeserializeObject<G.Event>(json)?.ToClient();
         }
 
-        public void CreateEvent(Event entity)
+        public Event CreateEvent(Event entity)
         {
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(entity));
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(entity.ToGlobal()));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             HttpResponseMessage responseMessage = _httpClient.PostAsync($"event/", content).Result;
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
-            G.Event newEvent = JsonConvert.DeserializeObject<G.Event>(json);
-            newEvent.ToClient();
+            return JsonConvert.DeserializeObject<G.Event>(json).ToClient();
+            //G.Event newEvent = JsonConvert.DeserializeObject<G.Event>(json);
+            //return newEvent.ToClient();
         }
 
-        public void UpdateEvent(int eventId, Event entity)
+        public bool UpdateEvent(int eventId, Event entity)
         {
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(entity));
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(entity.ToGlobal()));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             HttpResponseMessage responseMessage = _httpClient.PutAsync($"event/{eventId}", content).Result;
-            responseMessage.EnsureSuccessStatusCode();
+            return responseMessage.IsSuccessStatusCode;
         }
 
         public void DeleteEvent(int eventId)

@@ -120,15 +120,63 @@ namespace PresentationMVVM_WPFCore.ViewModels
             EventLocation = Entity.EventLocation;
             EventDate = Entity.EventDate;
             EventPrice = Entity.EventPrice;
-            _eventRepository = new EventRepository("https://localhost:5001/api/");
+            _eventRepository = new EventRepository("http://localhost:56586/api/");
         }
         public int EventId
         {
             get { return Entity.EventId; }
         }
+        #region Update Command
 
-        #region Command
-        
+        private RelayCommand _updateCommand;
+        public RelayCommand UpdateCommand
+        {
+            get
+            {
+                return _updateCommand ?? (_updateCommand = new RelayCommand(UpdateEvent, CanUpdate));
+            }
+        }
+        public bool CanUpdate()
+        {
+            return EventName != Entity.EventName
+                || EventType != Entity.EventType
+                || EventDescription != Entity.EventDescription
+                || EventOrg != Entity.EventOrg
+                || EventLocation != Entity.EventLocation
+                || EventDate != Entity.EventDate
+                || EventPrice != Entity.EventPrice;
+        }
+        public void UpdateEvent()
+        {
+            string oldName = Entity.EventName;
+            string oldType = Entity.EventType;
+            string oldDescription = Entity.EventDescription;
+            string oldOrg = Entity.EventOrg;
+            string oldLocation = Entity.EventLocation;
+            DateTime oldDate = Entity.EventDate;
+            double oldPrice = Entity.EventPrice;
+
+            Entity.EventName = EventName;
+            Entity.EventType = EventType;
+            Entity.EventDescription = EventDescription;
+            Entity.EventOrg = EventOrg;
+            Entity.EventLocation = EventLocation;
+            Entity.EventDate = EventDate;
+            Entity.EventPrice = EventPrice;
+
+            if (!_eventRepository.UpdateEvent(EventId, Entity))
+            {
+                Entity.EventName = oldName;
+                Entity.EventType = oldType;
+                Entity.EventDescription = oldDescription;
+                Entity.EventOrg = oldOrg;
+                Entity.EventLocation = oldLocation;
+                Entity.EventDate = oldDate;
+                Entity.EventPrice = oldPrice;
+            }
+        }
+        #endregion
+        #region Command    
 
         private RelayCommand _deleteCommand;
         public RelayCommand DeleteCommand

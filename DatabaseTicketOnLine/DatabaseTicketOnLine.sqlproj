@@ -73,6 +73,11 @@
     <Build Include="Stored Procedures\SP_DeleteUser.sql" />
     <Build Include="Stored Procedures\SP_GetEvents.sql" />
     <Build Include="Stored Procedures\SP_GetEvent.sql" />
+    <Build Include="Stored Procedures\SP_GetUsers.sql" />
+    <Build Include="Stored Procedures\SP_GetUser.sql" />
+    <Build Include="Stored Procedures\SP_CreateUser.sql" />
+    <Build Include="Stored Procedures\SP_UpdateUser.sql" />
+    <Build Include="Stored Procedures\SP_UpdateUserActiveOrAdmin.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseTicketOnLine.publish.xml" />

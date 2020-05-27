@@ -10,8 +10,8 @@ namespace Interfaces
         TEntity GetOneEvent(int eventId);
         List<TEntity> GetAllByUser(int userId);
         TEntity GetOneByUser(int userId, int eventId);
-        void CreateEvent(TEntity entity);
-        void UpdateEvent(int eventId, TEntity entity);
+        TEntity CreateEvent(TEntity entity);
+        bool UpdateEvent(int eventId, TEntity entity);
         void DeleteEvent(int eventId);
     }
 }

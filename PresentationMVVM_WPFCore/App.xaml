@@ -9,6 +9,6 @@
         <vm:EventViewModel x:Key="Event"/>
         <vm:AddEventViewModel x:Key="AddEvent"/>
         <vm:MainViewModel x:Key="Main"/>
-        <vm:EventDetailViewModel x:Key="EventDetail"/>
+        <vm:UserViewModel x:Key="User"/>
     </Application.Resources>
 </Application>

@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Interfaces
 {
-    public interface IUserRepository<TEntity>
+    public interface IUserAPIRequester<TEntity>
     {
-        List<TEntity> GetAllUser();
+        IEnumerable<TEntity> GetAllUser();
         TEntity GetOneUser(int userId);
-        TEntity CreateUser(TEntity entity);
+        void CreateUser(TEntity entity);
         bool UpdateUser(int userId, TEntity entity);
         void DeleteUser(int userId);
 

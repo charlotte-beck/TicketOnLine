@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api_ASPCore.Models.Mappers;
+using Api_ASPCore.Models;
 using Api_ASPCore.Repository.Services;
-
-using Api_ASPCore.Models.Data;
+using Global;
 using Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Repositories.GlobalRepositories;
 
 namespace Api_ASPCore.Controllers
 {
@@ -32,7 +30,7 @@ namespace Api_ASPCore.Controllers
         }
 
         // GET: api/Event/5
-        [HttpGet("{eventId}", Name = "Get")]
+        [HttpGet("{eventId}", Name = "GetEvent")]
         public Event GetOne(int eventId)
         {
             return _eventRepository.GetOneEvent(eventId);
@@ -56,19 +54,20 @@ namespace Api_ASPCore.Controllers
 
         //POST: api/Event
         [HttpPost]
-        public void Post([FromBody] Event entity)
+        public Event Post([FromBody] CreateEvent entity)
         {
             _eventRepository.CreateEvent(entity);
         }
 
         //PUT: api/Event/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpPut("{eventId}")]
+        public void Put(int eventId, [FromBody] UpdateEvent entity)
+        {
+            _eventRepository.UpdateEvent(eventId, entity);
+        }
 
         //DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{eventId}")]
         public void Delete(int eventId)
         {
             _eventRepository.DeleteEvent(eventId);
