@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PresentationMVVM_WPFCore.Utils;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,11 +16,12 @@ namespace PresentationMVVM_WPFCore.Views
     /// <summary>
     /// Logique d'interaction pour AddEventWindow.xaml
     /// </summary>
-    public partial class AddEventWindow : Window
+    public partial class AddEventWindow : Window, IClosable
     {
         public AddEventWindow()
         {
             InitializeComponent();
+
         }
     }
 }

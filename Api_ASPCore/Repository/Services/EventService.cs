@@ -56,9 +56,10 @@ namespace Api_ASPCore.Repository.Services
             command.Parameters.AddWithValue("EventDate", entity.EventDate);
             command.Parameters.AddWithValue("EventLocation", entity.EventLocation);
             command.Parameters.AddWithValue("EventPrice", entity.EventPrice);
-            entity.EventId = (int)command.ExecuteScalar();
+            //entity.EventId = (int)command.ExecuteScalar();
+
+            command.ExecuteNonQuery();
             return entity;
-            //command.ExecuteNonQuery();
 
         }
 

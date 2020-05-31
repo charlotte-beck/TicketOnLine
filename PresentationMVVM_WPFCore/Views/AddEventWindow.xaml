@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PresentationMVVM_WPFCore.Views"
         xmlns:vm="clr-namespace:PresentationMVVM_WPFCore.ViewModels"
         mc:Ignorable="d"
+        x:Name="MyWindow"
+
         Title="AddEventWindow" Height="450" Width="800" DataContext="{StaticResource AddEvent}">
     <Grid Grid.Column="1">
         <Grid.Resources>
@@ -38,7 +40,7 @@
         <Label Grid.Column="0" Grid.Row="1" Content="Type"/>
         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding EventType, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="2" Content="Date"/>
-        <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding EventDate, UpdateSourceTrigger=PropertyChanged}"/>
+        <DatePicker DisplayDate="5/28/2020" DisplayDateStart="5/28/2020" DisplayDateEnd="12/31/2050" Grid.Column="1" Grid.Row="2" SelectedDate="{Binding EventDate, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="3" Content="Description"/>
         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding EventDescription, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Grid.Column="0" Grid.Row="4" Content="Organisation"/>

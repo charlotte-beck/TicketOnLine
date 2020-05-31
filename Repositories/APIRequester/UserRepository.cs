@@ -17,7 +17,7 @@ namespace Repositories
     {
         private readonly HttpClient _httpClient;
 
-        public UserRepository(string url)
+        public UserRepository(string url, string token)
         {
             var handler = new HttpClientHandler
             {
@@ -28,14 +28,15 @@ namespace Repositories
             {
                 return true;
             };
-
+            
             _httpClient = new HttpClient(handler);
             _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
-        public void CreateUser(User entity)
+        public User CreateUser(User entity)
         {
             HttpContent content = new StringContent(JsonConvert.SerializeObject(entity));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -45,7 +46,7 @@ namespace Repositories
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
             G.User newUser = JsonConvert.DeserializeObject<G.User>(json);
-            newUser.ToClient();
+            return newUser.ToClient();
         }
 
         public void DeleteUser(int userId)

@@ -17,7 +17,7 @@ namespace Repositories
     public class EventRepository : IEventAPIRequester<Event>
     {
         private readonly HttpClient _httpClient;
-        public EventRepository(string url)
+        public EventRepository(string url, string token)
         {
             var handler = new HttpClientHandler
             {
@@ -33,6 +33,7 @@ namespace Repositories
             _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public IEnumerable<Event> GetAllEvent()

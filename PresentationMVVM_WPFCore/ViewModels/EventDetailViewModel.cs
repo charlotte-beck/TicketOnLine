@@ -4,7 +4,6 @@ using System.Text;
 using System.Windows.Controls.Primitives;
 using Interfaces;
 using PresentationMVVM_WPFCore.Utils.Command;
-using PresentationMVVM_WPFCore.Utils.Messages;
 using PresentationMVVM_WPFCore.ViewModels.ViewModelsBase;
 using PresentationMVVM_WPFCore.Views;
 using Repositories;
@@ -113,6 +112,7 @@ namespace PresentationMVVM_WPFCore.ViewModels
         private EventRepository _eventRepository;
         public EventDetailViewModel(Event entity) : base(entity)
         {
+
             EventName = Entity.EventName;
             EventType = Entity.EventType;
             EventDescription = Entity.EventDescription;
@@ -189,7 +189,7 @@ namespace PresentationMVVM_WPFCore.ViewModels
         private void Delete()
         {
             _eventRepository.DeleteEvent(EventId);
-            Messenger<DeleteEventMessage>.Instance.Send(new DeleteEventMessage(this));
+            Messenger<Event>.Instance.Send(Entity);
         }
 
         private RelayCommand _detailsCommand;

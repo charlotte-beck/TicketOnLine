@@ -1,8 +1,11 @@
-﻿using Forms;
-using Global;
-using Interfaces;
+﻿using Interfaces;
 using Newtonsoft.Json;
+using Repositories.Data;
+using Repositories.Data.Forms;
+using Repositories.Data.Mappers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -10,11 +13,12 @@ using System.Security.Authentication;
 
 namespace Repositories
 {
-    public class AuthRepository : IAuthRepository<RegisterForm, LoginForm, User>
+    public class AuthRepository : IAuthAPIRequester<RegisterForm, LoginForm, User>
     {
         private readonly HttpClient _httpClient;
+        private UserRepository _userRepository;
 
-        public AuthRepository(Uri uri)
+        public AuthRepository(string url)
         {
             var handler = new HttpClientHandler
             {
@@ -26,10 +30,12 @@ namespace Repositories
                 return true;
             };
 
+
             _httpClient = new HttpClient(handler);
-            _httpClient.BaseAddress = uri;
+            _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
 
@@ -57,5 +63,10 @@ namespace Repositories
             HttpResponseMessage responseMessage = _httpClient.PostAsync("auth/register", content).Result;
             responseMessage.EnsureSuccessStatusCode();
         }
+
+        //public IEnumerable<User> Get()
+        //{
+        //    return _userRepository.GetAllUser().Select(u => u.ToGlobal());
+        //}
     }
 }

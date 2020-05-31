@@ -13,5 +13,7 @@ namespace Global
         public string Passwd { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsActive { get; set; }
+
+        public string Token { get; set; }
     }
 }

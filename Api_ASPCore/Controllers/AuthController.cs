@@ -4,13 +4,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Api_ASPCore.Helpers;
 using Api_ASPCore.Models;
 using Api_ASPCore.Models.Mappers;
 using Api_ASPCore.Repository.Services;
 using Global;
 using Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Api_ASPCore.Controllers
@@ -19,11 +22,13 @@ namespace Api_ASPCore.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private AuthService _authRepository;
+        //private AuthService _authRepository;
+        private IAuthRepository<RegisterForm, LoginForm, User> _authRepository;
 
-        public AuthController()
+        public AuthController(AuthService authService)
         {
-            _authRepository = new AuthService();
+            //_authRepository = new AuthService(IAuthRepository<RegisterForm, LoginForm, User>, IOptions<AppSettings>);
+            _authRepository = authService;
         }
 
         [Route("api/auth/register/")]
@@ -58,7 +63,7 @@ namespace Api_ASPCore.Controllers
             {
                 try
                 {
-                    User user = _authRepository.Login(loginForm).ToGlobal();
+                    User user = _authRepository.Login(loginForm);
 
                     if (user is null)
                     {
@@ -80,6 +85,25 @@ namespace Api_ASPCore.Controllers
                 : new StringContent("There is no Data!!");
 
             return new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = content };
+        }
+
+        [AllowAnonymous]
+        [HttpPost("auth")]
+        public IActionResult Auth([FromBody]LoginForm model)
+        {
+            User user = _authRepository.Authenticate(model.Email, model.Passwd);
+
+            if (user == null)
+            {
+                return BadRequest(new { message = "Nom d'utilisateur ou mot de passe incorrect" });
+            }
+            return Ok(user);
+        }
+
+        [HttpGet("auth/user")]
+        public IActionResult GetAll()
+        {
+            return Ok(UserService.Instance.GetAllUser());
         }
     }
 }

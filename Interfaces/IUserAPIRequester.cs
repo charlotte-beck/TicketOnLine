@@ -8,7 +8,7 @@ namespace Interfaces
     {
         IEnumerable<TEntity> GetAllUser();
         TEntity GetOneUser(int userId);
-        void CreateUser(TEntity entity);
+        TEntity CreateUser(TEntity entity);
         bool UpdateUser(int userId, TEntity entity);
         void DeleteUser(int userId);
 

@@ -16,7 +16,7 @@ namespace Repositories.Data
         //public bool IsActive { get; set; }
 
         private int _userId;
-        private string _firstName, _lastName, _email, _passwd;
+        private string _firstName, _lastName, _email, _passwd, _token;
         private bool _isAdmin, _isActive;
         public int UserId
         {
@@ -55,19 +55,24 @@ namespace Repositories.Data
             set { _isActive = value; }
         }
 
-        public User(int userId, bool isAdmin, bool isActive)
+        public string Token
+        {
+            get { return _token; }
+            set { _token = value; }
+        }
+        public User(int userId, string email, bool isAdmin, bool isActive)
         {
             UserId = userId;
+            Email = email;
             IsAdmin = isAdmin;
             IsActive = isActive;
         }
 
         public User(int userId, string firstName, string lastName, string email, string passwd, bool isAdmin, bool isActive)
-            : this (userId, isAdmin, isActive)
+            : this (userId, email, isAdmin, isActive)
         {
             FirstName = firstName;
-            LastName = lastName;
-            Email = email;
+            LastName = lastName;           
             Passwd = passwd;
         }
     }

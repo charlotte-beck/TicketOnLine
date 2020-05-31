@@ -1,6 +1,9 @@
-﻿using Api_ASPCore.Models;
+﻿using Api_ASPCore.Helpers;
+using Api_ASPCore.Models;
 using Global;
 using Interfaces;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,7 +11,10 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Api_ASPCore.Repository.Services
@@ -16,20 +22,23 @@ namespace Api_ASPCore.Repository.Services
     public class AuthService : IAuthRepository<RegisterForm, LoginForm, User>
     {
         private static IAuthRepository<RegisterForm, LoginForm, User> _instance;
-        public static IAuthRepository<RegisterForm, LoginForm, User> Instance
-        {
-            get
-            {
-                return _instance ?? (_instance = new AuthService());
-            }
-        }
+        //public static IAuthRepository<RegisterForm, LoginForm, User> Instance
+        //{
+        //    get
+        //    {
+        //        return _instance ?? (_instance = new AuthService(IOptions<AppSettings>));
+        //    }
+        //}
 
         private SqlConnection _connection;
-
-        public AuthService()
+        private readonly AppSettings _appSettings;
+        public AuthService(IAuthRepository<RegisterForm, LoginForm, User> authRepository, IOptions<AppSettings> app)
         {
-            _connection = new SqlConnection(
-                ConfigurationManager.ConnectionStrings["DatabaseTicketOnLine"].ConnectionString);
+            _instance = authRepository;
+            _appSettings = app.Value;
+            _connection = new SqlConnection(@"Data Source=FORMA-VDI1106\TFTIC;Initial Catalog=DatabaseTicketOnLine;Integrated Security=True");
+            //_connection = new SqlConnection(
+            //    ConfigurationManager.ConnectionStrings["DatabaseTicketOnLine"].ConnectionString);
             _connection.Open();
         }
 
@@ -65,6 +74,31 @@ namespace Api_ASPCore.Repository.Services
             command.Parameters.AddWithValue("Email", registerForm.Email);
             command.Parameters.AddWithValue("Passwd", registerForm.Passwd);
             command.ExecuteNonQuery();
+        }
+
+        public User Authenticate(string email, string passwd)
+        {
+            User user = UserService.Instance.GetAllUser().SingleOrDefault(x => x.Email == email && x.Passwd == passwd);
+
+            if (user == null) return null;
+
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.UserId.ToString())
+                }),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+
+            return user;
         }
     }
 }

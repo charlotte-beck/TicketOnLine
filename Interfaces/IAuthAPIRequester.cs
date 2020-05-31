@@ -4,11 +4,9 @@ using System.Text;
 
 namespace Interfaces
 {
-    public interface IAuthRepository<TRegisterForm, TLoginForm, TResult>
+    public interface IAuthAPIRequester<TRegisterForm, TLoginForm, TResult>
     {
         TResult Login(TLoginForm loginForm);
         void Register(TRegisterForm registerForm);
-
-        TResult Authenticate(string email, string passwd);
     }
 }

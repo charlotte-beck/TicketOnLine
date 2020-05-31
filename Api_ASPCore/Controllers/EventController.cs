@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api_ASPCore.Models;
+using Api_ASPCore.Models.Mappers;
 using Api_ASPCore.Repository.Services;
 using Global;
 using Interfaces;
@@ -56,14 +57,14 @@ namespace Api_ASPCore.Controllers
         [HttpPost]
         public Event Post([FromBody] CreateEvent entity)
         {
-            _eventRepository.CreateEvent(entity);
+           return _eventRepository.CreateEvent(entity.ToGlobal());
         }
 
         //PUT: api/Event/5
         [HttpPut("{eventId}")]
         public void Put(int eventId, [FromBody] UpdateEvent entity)
         {
-            _eventRepository.UpdateEvent(eventId, entity);
+            _eventRepository.UpdateEvent(eventId, entity.ToGlobal());
         }
 
         //DELETE: api/ApiWithActions/5

@@ -29,39 +29,39 @@ namespace ToolBox.Patterns.Messenger
             _broadcast += action;
         }
 
-        public void Register(string box, Action<TMessage> action)
-        {
-            if (!_boxes.ContainsKey(box))
-                _boxes.Add(box, null);
+        //public void Register(string box, Action<TMessage> action)
+        //{
+        //    if (!_boxes.ContainsKey(box))
+        //        _boxes.Add(box, null);
 
-            _boxes[box] += action;
-        }
+        //    _boxes[box] += action;
+        //}
 
         public void Unregister(Action<TMessage> action)
         {
             _broadcast -= action;
         }
 
-        public void Unregister(string box, Action<TMessage> action)
-        {
-            if (!_boxes.ContainsKey(box))
-                throw new InvalidOperationException("Invalid box");
+        //public void Unregister(string box, Action<TMessage> action)
+        //{
+        //    if (!_boxes.ContainsKey(box))
+        //        throw new InvalidOperationException("Invalid box");
 
-            _boxes[box] -= action;
-        }
+        //    _boxes[box] -= action;
+        //}
 
         public void Send(TMessage message)
         {
             _broadcast?.Invoke(message);
         }
 
-        public void Send(string box, TMessage message)
-        {
-            if (!_boxes.ContainsKey(box))
-                throw new InvalidOperationException("Invalid box");
+        //public void Send(string box, TMessage message)
+        //{
+        //    if (!_boxes.ContainsKey(box))
+        //        throw new InvalidOperationException("Invalid box");
 
-            _boxes[box]?.Invoke(message);
-        }
+        //    _boxes[box]?.Invoke(message);
+        //}
     }
 }
 

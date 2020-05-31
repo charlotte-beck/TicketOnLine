@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api_ASPCore.Models;
-using Api_ASPCore.Models.Data;
+using Api_ASPCore.Models.Mappers;
 using Api_ASPCore.Repository.Services;
 using Global;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +40,7 @@ namespace Api_ASPCore.Controllers
         [HttpPost]
         public User Post([FromBody] RegisterForm entity)
         {
-            _userRepository.CreateUser(entity);
+            return _userRepository.CreateUser(entity.ToGlobal());
         }
 
         // PUT: api/User/5

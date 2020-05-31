@@ -1,15 +1,20 @@
-﻿using PresentationMVVM_WPFCore.Utils.Command;
+﻿using PresentationMVVM_WPFCore.Utils;
+using PresentationMVVM_WPFCore.Utils.Command;
 using PresentationMVVM_WPFCore.ViewModels.ViewModelsBase;
 using PresentationMVVM_WPFCore.Views;
 using Repositories;
 using Repositories.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using System.Windows;
+using ToolBox.Patterns.Messenger;
 
 namespace PresentationMVVM_WPFCore.ViewModels
 {
-    public class AddEventViewModel : ViewModelBase
+    public class AddEventViewModel : ViewModelCollectionBase<EventDetailViewModel>
     {
         #region Properties
         private string _eventName;
@@ -113,7 +118,26 @@ namespace PresentationMVVM_WPFCore.ViewModels
         {
             _eventRepository = new EventRepository("http://localhost:56586/api/");
 
+
         }
+        //private ICommand _closeWindowCommand;
+        //public ICommand CloseWindowCommand
+        //{
+        //    get
+        //    {
+        //        return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(CloseWindow));
+        //    }
+        //}
+
+
+        //private void CloseWindow()
+        //{
+        //    IClosable window = new AddEventWindow();
+        //    if (window != null)
+        //    {
+        //        window.Close();
+        //    }
+        //}
 
         private ICommand _addCommand;
         public ICommand AddCommand
@@ -137,6 +161,7 @@ namespace PresentationMVVM_WPFCore.ViewModels
 
         private void Add()
         {
+            //EventDate = DateTime.Now;
             Event e = new Event
             {
                 EventName = EventName,
@@ -148,7 +173,22 @@ namespace PresentationMVVM_WPFCore.ViewModels
                 EventPrice = EventPrice
             };
             _eventRepository.CreateEvent(e);
+            Items = LoadItems();
+            Messenger<Event>.Instance.Send(e);
             //Items.Add(new EventDetailViewModel(e));
+            EventName = EventType = EventDescription = EventOrg = EventLocation = null;
+            EventDate = DateTime.Now;
+            EventPrice = 0;
+            AddEventWindow addEventWindow = App.Current.Windows.OfType<AddEventWindow>().FirstOrDefault();
+            addEventWindow.Close();
+        }
+
+        protected override ObservableCollection<EventDetailViewModel> LoadItems()
+        {
+            ObservableCollection<EventDetailViewModel> events =
+                new ObservableCollection<EventDetailViewModel>(_eventRepository.GetAllEvent()
+                .Select(x => new EventDetailViewModel(x)));
+            return events;
         }
     }
 }
