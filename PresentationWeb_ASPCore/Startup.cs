@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PresentationWeb_ASPCore.Utils;
 using Repositories;
-using Repositories.APIRequester;
 using Repositories.Data;
 using Repositories.Data.Forms;
 
@@ -36,7 +35,7 @@ namespace PresentationWeb_ASPCore
             services.AddTransient<ISessionManager, SessionManager>();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.IdleTimeout = TimeSpan.FromHours(3);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

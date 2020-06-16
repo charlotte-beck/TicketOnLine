@@ -5,37 +5,36 @@ using System.Threading.Tasks;
 using Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PresentationWeb_ASPCore.Models;
 using PresentationWeb_ASPCore.Utils;
-using Repositories.Data;
+using PresentationWeb_ASPCore.Utils.CustomAttributes;
+using D = Repositories.Data;
 
 namespace PresentationWeb_ASPCore.Controllers
 {
+    [AuthenticateRequired]
     public class UserController : ControllerBase
     {
-        private readonly IUserAPIRequester<User> _userRequester;
+        private readonly IUserAPIRequester<D.User> _userRequester;
         private readonly ISessionManager _sessionManager;
-        public UserController(IUserAPIRequester<User> userRepository, ISessionManager sessionManager) : base(sessionManager)
+        //public int userId { get; set; }
+
+        public UserController(IUserAPIRequester<D.User> userRepository, ISessionManager sessionManager) : base(sessionManager)
         {
             _userRequester = userRepository;
             _sessionManager = sessionManager;
+            //userId = _sessionManager.user.UserId;
         }
 
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            
+            return View(_userRequester.GetOneUser(_sessionManager.user.UserId));
         }
-
-        // GET: User/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        
 
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int userId)
         {
             return View();
         }
@@ -43,22 +42,22 @@ namespace PresentationWeb_ASPCore.Controllers
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int userId, UpdateUserForm updateUserForm)
         {
             try
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details));
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int userId)
         {
             return View();
         }
@@ -72,15 +71,22 @@ namespace PresentationWeb_ASPCore.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Register", "Auth");
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 
         #region Reste CRUD
+        // GET: User/Details/5
+        public ActionResult Details(int userId)
+        {
+            //userId = _sessionManager.user.UserId;
+            return View(_userRequester.GetOneUser(userId));
+        }
+        
         // GET: User/Create
         public ActionResult Create()
         {

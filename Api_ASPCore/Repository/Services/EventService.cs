@@ -122,6 +122,7 @@ namespace Api_ASPCore.Repository.Services
             SqlCommand command = _connection.CreateCommand();
             command.CommandText = "SP_GetEvent";
             command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("EventId", eventId);
             Event e = new Event();
             using (SqlDataReader dr = command.ExecuteReader())
             {

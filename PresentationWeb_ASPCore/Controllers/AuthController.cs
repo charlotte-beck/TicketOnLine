@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PresentationWeb_ASPCore.Models.Mappers;
 using PresentationWeb_ASPCore.Utils;
+using PresentationWeb_ASPCore.Utils.CustomAttributes;
 using Repositories.Data;
 using Repositories.Data.Forms;
 
 namespace PresentationWeb_ASPCore.Controllers
 {
-    //[Authorize]
     public class AuthController : ControllerBase
     {
         private readonly IAuthAPIRequester<RegisterForm, LoginForm, User> _authAPIRequester;
@@ -25,28 +25,22 @@ namespace PresentationWeb_ASPCore.Controllers
         }
 
         // GET: Auth
-        //[AllowAnonymous]
+        [AnonymousRequired]
         public IActionResult Index()
         {
-            return RedirectToAction("Login","Auth");
-        }
-
-        // GET: Auth/Details/5
-        public IActionResult Details(int id)
-        {
-            return View();
+            return RedirectToAction("Login");
         }
 
         // GET: Auth/Create
-        //[AllowAnonymous]
+        [AnonymousRequired]
         public IActionResult Register()
         {
             return View();
         }
-
         // POST: Auth/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AnonymousRequired]
         public IActionResult Register(RegisterForm registerForm)
         {
             if (ModelState.IsValid)
@@ -56,7 +50,7 @@ namespace PresentationWeb_ASPCore.Controllers
                     // TODO: Add insert logic here
 
                     _authAPIRequester.Register(registerForm);
-                    return RedirectToAction("Login","Auth");
+                    return RedirectToAction("Login");
                 }
                 catch
                 {
@@ -66,88 +60,108 @@ namespace PresentationWeb_ASPCore.Controllers
             return View(registerForm.ToASP());
             
         }
-        //[AllowAnonymous]
+
+        [AnonymousRequired]
         public IActionResult Login()
         {
             return View();
         }
-        //[AllowAnonymous]
+        [AnonymousRequired]
         [HttpPost]
         public IActionResult Login(LoginForm loginForm)
         {
             if (ModelState.IsValid)
             {
-                try
+                User user = _authAPIRequester.Login(loginForm);
+                if (!(user is null))
                 {
-                    User u = _authAPIRequester.Login(loginForm);
-                    if (!(u is null))
-                    {
-                        _sessionManager.user = u;
-                        return RedirectToAction("Index", "Event");
-                    }
-
-                    ViewBag.Message = "Incorrect login or password!";
+                    _sessionManager.user = user;
+                    return RedirectToAction("Index", "Event");
                 }
-                catch (Exception ex)
+                else
                 {
+                    //ViewBag.Message = "Incorrect login or password!";
                     return View("Error");
                 }
+                //try
+                //{
+                //    User u = _authAPIRequester.Login(loginForm);
+                //    if (!(u is null))
+                //    {
+                //        _sessionManager.user = u;
+                //        return RedirectToAction("Index", "Event");
+                //    }
+
+                //    ViewBag.Message = "Incorrect login or password!";
+                //}
+                //catch
+                //{
+                //    return View("Error");
+                //}
             }
-            return View(loginForm);
+            return View(loginForm.ToASP());
         }
 
+        [AuthenticateRequired]
         public IActionResult Logout()
         {
             _sessionManager.Logout();
-            return RedirectToAction("Login","Auth");
+            return RedirectToAction("Login");
         }
 
         #region Reste CRUD
-        // GET: Auth/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //// GET: Auth/Details/5
+        //[AnonymousRequired]
+        //public IActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: Auth/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        //// GET: Auth/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: Auth/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
 
-        // GET: Auth/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
-        // POST: Auth/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //// GET: Auth/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: Auth/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
         #endregion
     }
 }

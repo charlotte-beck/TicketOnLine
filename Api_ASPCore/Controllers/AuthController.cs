@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+//using Repositories.Data;
 using Repositories.Data.Forms;
 
 namespace Api_ASPCore.Controllers
@@ -22,28 +23,19 @@ namespace Api_ASPCore.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        //private AuthService _authRepository;
         private IAuthRepository<RegisterForm, LoginForm, User> _authRepository;
 
         public AuthController(IAuthRepository<RegisterForm, LoginForm, User> authService)
         {
-            //_authRepository = new AuthService(IAuthRepository<RegisterForm, LoginForm, User>, IOptions<AppSettings>);
             _authRepository = authService;
         }
 
-        //[AllowAnonymous]
-        //[HttpGet]
-        //public string Get()
-        //{
-        //    return "coucou";
-        //}
         //[Route("api/auth/register/")]
         //[HttpPost]
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterForm registerForm)
         {
-            //return Ok();
             if (!(registerForm is null))
             {
 
@@ -61,45 +53,40 @@ namespace Api_ASPCore.Controllers
         //[HttpPost]
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login(LoginForm loginForm)
+        public IActionResult Login([FromBody] LoginForm loginForm)
         {
             if (!(loginForm is null))
             {
-                try
-                {
-                    User user = _authRepository.Login(loginForm);
-                    user = _authRepository.Authenticate(user);
+                User user = _authRepository.Login(loginForm);
+                user = _authRepository.Authenticate(user);
+                return Ok(user);
 
-                    if (user is null)
-                    {
-                        return NoContent();
-                    }
-                    else
-                    {
-                        return Ok(user);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest();
-                }
+
+                //try
+                //{
+                //    User user = _authRepository.Login(loginForm);
+                //    user = _authRepository.Authenticate(user);
+
+                //    if (user is null)
+                //    {
+                //        return NoContent();
+                //    }
+                //    else
+                //    {
+                //        return Ok(user);
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    return BadRequest();
+                //}
+            }
+            else
+            {
+                return BadRequest();
             }
 
-            return (!(loginForm is null)) ? BadRequest(ModelState) : BadRequest("No Data!");
+            //return (!(loginForm is null)) ? BadRequest(ModelState) : BadRequest("No Data!");
         }
-
-        //[AllowAnonymous]
-        //[Route("api/auth/login/")]
-        //[HttpPost("auth")]
-        //public IActionResult Login([FromBody]LoginForm loginForm)
-        //{
-        //    User user = _authRepository.Authenticate(loginForm.Email, loginForm.Passwd);
-
-        //    if (user == null)
-        //    {
-        //        return BadRequest(new { message = "Nom d'utilisateur ou mot de passe incorrect" });
-        //    }
-        //    return Ok(user);
-        //}
     }
 }

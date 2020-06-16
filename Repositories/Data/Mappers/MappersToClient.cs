@@ -7,7 +7,7 @@ namespace Repositories.Data.Mappers
 {
     public static class MappersToClient
     {
-        internal static Event ToClient(this G.Event e)
+        public static Event ToClient(this G.Event e)
         {
             return new Event
             {
@@ -22,9 +22,9 @@ namespace Repositories.Data.Mappers
             };
         }
 
-        internal static User ToClient(this G.User u)
+        public static User ToClient(this G.User u)
         {
-            return new User(u.UserId, u.FirstName, u.LastName, u.Email, u.Passwd, u.IsActive, u.IsAdmin);
+            return new User(u.UserId, u.FirstName, u.LastName, u.Email, u.Passwd, u.IsAdmin, u.IsActive, u.Token);
         }
     }
 }

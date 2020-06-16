@@ -6,6 +6,7 @@ using Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PresentationWeb_ASPCore.Utils;
+using PresentationWeb_ASPCore.Utils.CustomAttributes;
 using Repositories;
 using Repositories.Data;
 
@@ -20,10 +21,20 @@ namespace PresentationWeb_ASPCore.Controllers
             _sessionManager = sessionManager;
             _eventRequester = eventRepository;
         }
+
         // GET: Event
+        [AuthenticateRequired]
         public ActionResult Index()
         {
-            return View(_eventRequester.GetAllEvent().Where(e => e.EventDate >= DateTime.Now));
+            if (!(_sessionManager.user is null))
+            {
+                return View(_eventRequester.GetAllEvent().Where(e => e.EventDate >= DateTime.Now));
+            }
+            else
+            {
+                return View("Error");
+            }
+            
         }
 
         // GET: Event/Details/5

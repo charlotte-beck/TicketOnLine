@@ -1,5 +1,6 @@
 ﻿using Interfaces;
 using Newtonsoft.Json;
+using G = Global;
 using Repositories.Data;
 using Repositories.Data.Forms;
 using Repositories.Data.Mappers;
@@ -52,7 +53,7 @@ namespace Repositories
                 return null;
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<User>(json);
+            return JsonConvert.DeserializeObject<G.User>(json).ToClient();
         }
 
         public void Register(RegisterForm registerForm)

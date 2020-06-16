@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Repositories.Data;
+using Repositories.Data.Mappers;
+using G = Global;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,8 @@ namespace PresentationWeb_ASPCore.Utils
             get
             {
                 string json = _session.GetString(nameof(User));
-                return (json is null) ? null : JsonConvert.DeserializeObject<User>(json);
+                return (json is null) ? null : JsonConvert.DeserializeObject<G.User>(json).ToClient();
+                //return (json is null) ? null : JsonConvert.DeserializeObject<User>(json);
             }
             set
             {

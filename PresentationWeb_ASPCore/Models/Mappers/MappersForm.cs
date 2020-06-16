@@ -18,5 +18,14 @@ namespace PresentationWeb_ASPCore.Models.Mappers
                 Passwd = rf.Passwd
             };
         }
+
+        public static LoginForm ToASP(this D.LoginForm lf)
+        {
+            return new LoginForm
+            {
+                Email = lf.Email,
+                Passwd = lf.Passwd
+            };
+        }
     }
 }

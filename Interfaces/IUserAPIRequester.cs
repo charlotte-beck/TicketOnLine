@@ -12,6 +12,7 @@ namespace Interfaces
         bool UpdateUser(int userId, TEntity entity);
         void DeleteUser(int userId);
 
+        TEntity GetOneUserWithToken(int userId, string token);
         bool UpdateUserStatus(int userId, TEntity entity);
     }
 }

@@ -75,5 +75,11 @@ namespace Repositories.Data
             LastName = lastName;           
             Passwd = passwd;
         }
+
+        public User(int userId, string firstName, string lastName, string email, string passwd, bool isAdmin, bool isActive, string token)
+            : this (userId, firstName, lastName, email, passwd, isAdmin, isActive)
+        {
+            Token = token;
+        }
     }
 }

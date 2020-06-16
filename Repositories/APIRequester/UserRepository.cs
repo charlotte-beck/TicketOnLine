@@ -33,7 +33,6 @@ namespace Repositories
             _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public User CreateUser(User entity)
@@ -67,6 +66,16 @@ namespace Repositories
 
         public User GetOneUser(int userId)
         {
+            HttpResponseMessage responseMessage = _httpClient.GetAsync($"user/{userId}").Result;
+            responseMessage.EnsureSuccessStatusCode();
+
+            string json = responseMessage.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<G.User>(json)?.ToClient();
+        }
+
+        public User GetOneUserWithToken(int userId, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage responseMessage = _httpClient.GetAsync($"user/{userId}").Result;
             responseMessage.EnsureSuccessStatusCode();
 

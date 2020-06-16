@@ -69,6 +69,7 @@ namespace Api_ASPCore.Repository.Services
             SqlCommand command = _connection.CreateCommand();
             command.CommandText = "SP_GetUser";
             command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("UserId", userId);
             User u = new User();
             using (SqlDataReader dr = command.ExecuteReader())
             {
