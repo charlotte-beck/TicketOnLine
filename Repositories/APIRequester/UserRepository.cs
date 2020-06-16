@@ -17,7 +17,7 @@ namespace Repositories
     {
         private readonly HttpClient _httpClient;
 
-        public UserRepository(string url, string token)
+        public UserRepository(string url)
         {
             var handler = new HttpClientHandler
             {
@@ -33,7 +33,7 @@ namespace Repositories
             _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public User CreateUser(User entity)

@@ -63,10 +63,5 @@ namespace Repositories
             HttpResponseMessage responseMessage = _httpClient.PostAsync("auth/register", content).Result;
             responseMessage.EnsureSuccessStatusCode();
         }
-
-        //public IEnumerable<User> Get()
-        //{
-        //    return _userRepository.GetAllUser().Select(u => u.ToGlobal());
-        //}
     }
 }

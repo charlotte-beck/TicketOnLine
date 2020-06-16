@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PresentationWeb_ASPCore.Models;
+using PresentationWeb_ASPCore.Utils;
 
 namespace PresentationWeb_ASPCore.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ISessionManager _sessionManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ISessionManager sessionManager) : base(sessionManager)
         {
             _logger = logger;
+            _sessionManager = sessionManager;
         }
 
         public IActionResult Index()

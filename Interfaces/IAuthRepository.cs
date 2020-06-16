@@ -9,6 +9,6 @@ namespace Interfaces
         TResult Login(TLoginForm loginForm);
         void Register(TRegisterForm registerForm);
 
-        TResult Authenticate(string email, string passwd);
+        TResult Authenticate(TResult user);
     }
 }

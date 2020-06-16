@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Api_ASPCore.Helpers;
-using Api_ASPCore.Models;
 using Api_ASPCore.Repository.Services;
 using Global;
 using Interfaces;
@@ -18,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Repositories.Data.Forms;
 
 namespace Api_ASPCore
 {
@@ -79,7 +79,7 @@ namespace Api_ASPCore
             }
 
             app.UseRouting();
-
+            app.UseHttpsRedirection();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthentication();

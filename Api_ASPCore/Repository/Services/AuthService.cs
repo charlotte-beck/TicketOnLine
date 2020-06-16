@@ -1,9 +1,9 @@
 ﻿using Api_ASPCore.Helpers;
-using Api_ASPCore.Models;
 using Global;
 using Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Repositories.Data.Forms;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,7 +21,7 @@ namespace Api_ASPCore.Repository.Services
 {
     public class AuthService : IAuthRepository<RegisterForm, LoginForm, User>
     {
-        private static IAuthRepository<RegisterForm, LoginForm, User> _instance;
+        //private static IAuthRepository<RegisterForm, LoginForm, User> _instance;
         //public static IAuthRepository<RegisterForm, LoginForm, User> Instance
         //{
         //    get
@@ -32,9 +32,9 @@ namespace Api_ASPCore.Repository.Services
 
         private SqlConnection _connection;
         private readonly AppSettings _appSettings;
-        public AuthService(IAuthRepository<RegisterForm, LoginForm, User> authRepository, IOptions<AppSettings> app)
+        public AuthService(IOptions<AppSettings> app)
         {
-            _instance = authRepository;
+            //_instance = authRepository;
             _appSettings = app.Value;
             _connection = new SqlConnection(@"Data Source=FORMA-VDI1106\TFTIC;Initial Catalog=DatabaseTicketOnLine;Integrated Security=True");
             //_connection = new SqlConnection(
@@ -58,7 +58,7 @@ namespace Api_ASPCore.Repository.Services
                     user.FirstName = dr["FirstName"].ToString();
                     user.LastName = dr["LastName"].ToString();
                     user.Email = dr["Email"].ToString();
-                    user.Passwd = dr["Passwd"].ToString();
+                    //user.Passwd = dr["Passwd"].ToString();
                 }
             }
             return user;
@@ -76,9 +76,9 @@ namespace Api_ASPCore.Repository.Services
             command.ExecuteNonQuery();
         }
 
-        public User Authenticate(string email, string passwd)
+        public User Authenticate(User user)
         {
-            User user = UserService.Instance.GetAllUser().SingleOrDefault(x => x.Email == email && x.Passwd == passwd);
+            //User user = UserService.Instance.GetAllUser().SingleOrDefault(x => x.Email == email && x.Passwd == passwd);
 
             if (user == null) return null;
 

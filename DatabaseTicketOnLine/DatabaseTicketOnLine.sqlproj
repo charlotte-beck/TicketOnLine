@@ -59,25 +59,34 @@
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures" />
     <Folder Include="Functions" />
+    <Folder Include="Stored Procedures\Event" />
+    <Folder Include="Stored Procedures\User" />
+    <Folder Include="Stored Procedures\Reservation" />
+    <Folder Include="Stored Procedures\Authenticate" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\User.sql" />
-    <Build Include="Stored Procedures\SP_RegisterUser.sql" />
-    <Build Include="Stored Procedures\SP_LoginUser.sql" />
     <Build Include="Functions\GetPreSalt.sql" />
     <Build Include="Functions\GetPostSalt.sql" />
     <Build Include="Tables\Event.sql" />
-    <Build Include="Stored Procedures\SP_CreateEvent.sql" />
-    <Build Include="Stored Procedures\SP_UpdateEvent.sql" />
-    <Build Include="Stored Procedures\SP_DeleteEvent.sql" />
-    <Build Include="Stored Procedures\SP_DeleteUser.sql" />
-    <Build Include="Stored Procedures\SP_GetEvents.sql" />
-    <Build Include="Stored Procedures\SP_GetEvent.sql" />
-    <Build Include="Stored Procedures\SP_GetUsers.sql" />
-    <Build Include="Stored Procedures\SP_GetUser.sql" />
-    <Build Include="Stored Procedures\SP_CreateUser.sql" />
-    <Build Include="Stored Procedures\SP_UpdateUser.sql" />
     <Build Include="Stored Procedures\SP_UpdateUserActiveOrAdmin.sql" />
+    <Build Include="Tables\Reservation.sql" />
+    <Build Include="Stored Procedures\SP_GetReservation.sql" />
+    <Build Include="Stored Procedures\Event\SP_DeleteEvent.sql" />
+    <Build Include="Stored Procedures\Event\SP_CreateEvent.sql" />
+    <Build Include="Stored Procedures\User\SP_CreateUser.sql" />
+    <Build Include="Stored Procedures\User\SP_UpdateUser.sql" />
+    <Build Include="Stored Procedures\User\SP_DeleteUser.sql" />
+    <Build Include="Stored Procedures\Event\SP_GetEvents.sql" />
+    <Build Include="Stored Procedures\Event\SP_GetEvent.sql" />
+    <Build Include="Stored Procedures\User\SP_GetUser.sql" />
+    <Build Include="Stored Procedures\User\SP_GetUsers.sql" />
+    <Build Include="Stored Procedures\Authenticate\SP_LoginUser.sql" />
+    <Build Include="Stored Procedures\Event\SP_UpdateEvent.sql" />
+    <Build Include="Stored Procedures\Authenticate\SP_RegisterUser.sql" />
+    <Build Include="Stored Procedures\Reservation\SP_UpdateReservation.sql" />
+    <Build Include="Stored Procedures\Reservation\SP_CreateReservation.sql" />
+    <Build Include="Stored Procedures\Reservation\SP_DeleteReservation.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseTicketOnLine.publish.xml" />

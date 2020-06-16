@@ -2,12 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PresentationWeb_ASPCore.Utils;
+using Repositories;
+using Repositories.APIRequester;
+using Repositories.Data;
+using Repositories.Data.Forms;
 
 namespace PresentationWeb_ASPCore
 {
@@ -24,6 +30,25 @@ namespace PresentationWeb_ASPCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddHttpContextAccessor();
+
+            services.AddTransient<ISessionManager, SessionManager>();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            //services.AddScoped<ICryptoRSA, CryptoRSA>(c => new CryptoRSA());
+
+            services.AddSingleton(p => new string("http://localhost:56586/api/"));
+          
+            services.AddSingleton<IAuthAPIRequester<RegisterForm, LoginForm, User>, AuthRepository>();
+            services.AddSingleton<IUserAPIRequester<User>, UserRepository>();
+            services.AddSingleton<IEventAPIRequester<Event>, EventRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,8 +68,10 @@ namespace PresentationWeb_ASPCore
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -17,7 +17,7 @@ namespace Repositories
     public class EventRepository : IEventAPIRequester<Event>
     {
         private readonly HttpClient _httpClient;
-        public EventRepository(string url, string token)
+        public EventRepository(string url)
         {
             var handler = new HttpClientHandler
             {
@@ -33,12 +33,11 @@ namespace Repositories
             _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public IEnumerable<Event> GetAllEvent()
         {
-            HttpResponseMessage responseMessage = _httpClient.GetAsync("event/").Result;
+            HttpResponseMessage responseMessage = _httpClient.GetAsync("event").Result;
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;
@@ -76,7 +75,7 @@ namespace Repositories
             HttpContent content = new StringContent(JsonConvert.SerializeObject(entity.ToGlobal()));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            HttpResponseMessage responseMessage = _httpClient.PostAsync($"event/", content).Result;
+            HttpResponseMessage responseMessage = _httpClient.PostAsync("event", content).Result;
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;

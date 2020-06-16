@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api_ASPCore.Models;
-using Api_ASPCore.Models.Mappers;
 using Api_ASPCore.Repository.Services;
 using Global;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Data.Forms;
 
 namespace Api_ASPCore.Controllers
 {
@@ -37,11 +36,11 @@ namespace Api_ASPCore.Controllers
         }
 
         // POST: api/User
-        [HttpPost]
-        public User Post([FromBody] RegisterForm entity)
-        {
-            return _userRepository.CreateUser(entity.ToGlobal());
-        }
+        //[HttpPost]
+        //public User Post([FromBody] RegisterForm entity)
+        //{
+        //    return _userRepository.CreateUser(entity.ToGlobal());
+        //}
 
         // PUT: api/User/5
         [HttpPut("{userId}")]

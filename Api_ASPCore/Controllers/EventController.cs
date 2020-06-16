@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api_ASPCore.Models;
-using Api_ASPCore.Models.Mappers;
 using Api_ASPCore.Repository.Services;
 using Global;
 using Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api_ASPCore.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EventController : ControllerBase
@@ -24,6 +24,7 @@ namespace Api_ASPCore.Controllers
         }
 
         // GET: api/Event
+        //[AllowAnonymous]
         [HttpGet]
         public IEnumerable<Event> GetAll()
         {
@@ -55,16 +56,16 @@ namespace Api_ASPCore.Controllers
 
         //POST: api/Event
         [HttpPost]
-        public Event Post([FromBody] CreateEvent entity)
+        public Event Post([FromBody] Event entity)
         {
-           return _eventRepository.CreateEvent(entity.ToGlobal());
+            return _eventRepository.CreateEvent(entity);
         }
 
         //PUT: api/Event/5
         [HttpPut("{eventId}")]
-        public void Put(int eventId, [FromBody] UpdateEvent entity)
+        public void Put(int eventId, [FromBody] Event entity)
         {
-            _eventRepository.UpdateEvent(eventId, entity.ToGlobal());
+            _eventRepository.UpdateEvent(eventId, entity);
         }
 
         //DELETE: api/ApiWithActions/5
