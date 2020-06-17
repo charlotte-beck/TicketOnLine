@@ -4,6 +4,7 @@
 	UserId INT NOT NULL,
 	EventId INT NOT NULL,
 	FactureDate DATE NOT NULL,
+	NbTicket INT NOT NULL,
 	FactureTotal FLOAT NOT NULL,
 	NumTransactionValidee INT NOT NULL,
 	CONSTRAINT [PK_Reservation] PRIMARY KEY ([ReservationId]),

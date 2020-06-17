@@ -59,9 +59,15 @@ namespace Api_ASPCore.Controllers
             {
                 User user = _authRepository.Login(loginForm);
                 user = _authRepository.Authenticate(user);
-                return Ok(user);
-
-
+                if (user.UserId == 0)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return Ok(user);
+                }
+        
                 //try
                 //{
                 //    User user = _authRepository.Login(loginForm);

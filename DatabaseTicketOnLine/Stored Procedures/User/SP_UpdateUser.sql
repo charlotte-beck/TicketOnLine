@@ -3,7 +3,7 @@
 	@FirstName nvarchar(75),
 	@LastName nvarchar(75),
 	@Email nvarchar(384),
-	@Passwd varbinary(64),
+	@Passwd nvarchar(20),
 	@IsAdmin bit,
 	@IsActive bit
 AS
@@ -12,7 +12,7 @@ Begin
 	Set FirstName = @FirstName,
 	LastName = @LastName,
 	Email = @Email,
-	Passwd = @Passwd,
+	Passwd = HASHBYTES('SHA2_512', dbo.GetPreSalt() + @Passwd + dbo.GetPostSalt()),
 	IsAdmin = @IsAdmin,
 	IsActive = @IsActive	
 	where UserId = @UserId;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,16 @@ namespace PresentationWeb_ASPCore.Models.Mappers
             {
                 Email = lf.Email,
                 Passwd = lf.Passwd
+            };
+        }
+
+        public static User ToClient(this UpdateUserForm uf)
+        {
+            return new User
+            {
+                FirstName = uf.FirstName,
+                LastName = uf.LastName,
+                Email = uf.Email
             };
         }
     }

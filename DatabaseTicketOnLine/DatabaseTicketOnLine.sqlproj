@@ -71,7 +71,6 @@
     <Build Include="Tables\Event.sql" />
     <Build Include="Stored Procedures\SP_UpdateUserActiveOrAdmin.sql" />
     <Build Include="Tables\Reservation.sql" />
-    <Build Include="Stored Procedures\SP_GetReservation.sql" />
     <Build Include="Stored Procedures\Event\SP_DeleteEvent.sql" />
     <Build Include="Stored Procedures\Event\SP_CreateEvent.sql" />
     <Build Include="Stored Procedures\User\SP_CreateUser.sql" />
@@ -87,6 +86,9 @@
     <Build Include="Stored Procedures\Reservation\SP_UpdateReservation.sql" />
     <Build Include="Stored Procedures\Reservation\SP_CreateReservation.sql" />
     <Build Include="Stored Procedures\Reservation\SP_DeleteReservation.sql" />
+    <Build Include="Stored Procedures\Reservation\SP_GetReservation.sql" />
+    <Build Include="Stored Procedures\Reservation\SP_GetAllReservation_User.sql" />
+    <Build Include="Stored Procedures\Reservation\SP_GetAllReservation_Event.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseTicketOnLine.publish.xml" />

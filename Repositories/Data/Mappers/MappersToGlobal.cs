@@ -36,5 +36,19 @@ namespace Repositories.Data.Mappers
                 IsAdmin = u.IsAdmin
             };
         }
+
+        internal static g.Reservation ToGlobal(this Reservation r)
+        {
+            return new g.Reservation
+            {
+                ReservationId = r.ReservationId,
+                UserId = r.UserId,
+                EventId = r.EventId,
+                FactureDate = r.FactureDate,
+                NbTicket = r.NbTicket,
+                FactureTotal = r.FactureTotal,
+                NumTransactionValidee = r.NumTransactionValidee
+            };
+        }
     }
 }

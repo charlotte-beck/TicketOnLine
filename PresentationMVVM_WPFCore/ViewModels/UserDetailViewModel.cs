@@ -105,6 +105,11 @@ namespace PresentationMVVM_WPFCore.ViewModels
 
         public UserDetailViewModel(User entity) : base(entity)
         {
+            FirstName = Entity.FirstName;
+            LastName = Entity.LastName;
+            Email = Entity.Email;
+            IsActive = Entity.IsActive;
+            IsAdmin = Entity.IsAdmin;
             _userRepository = new UserRepository("http://localhost:56586/api/");
         }
 

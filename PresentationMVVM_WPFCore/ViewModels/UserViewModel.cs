@@ -19,12 +19,13 @@ namespace PresentationMVVM_WPFCore.ViewModels
         public UserViewModel()
         {
             _userRepository = new UserRepository("http://localhost:56586/api/");
-            //Messenger<UserDetailViewModel>.Instance.Register("UserDelete", OnDeleteUser);
+            Messenger<User>.Instance.Register(OnDeleteUser);
         }
-        //private void OnDeleteUser(UserDetailViewModel instance)
-        //{
-        //    Items.Remove(instance);
-        //}
+        private void OnDeleteUser(User u)
+        {
+            UserDetailViewModel userDetailViewModel = new UserDetailViewModel(u);
+            Items = LoadItems();
+        }
 
         protected override ObservableCollection<UserDetailViewModel> LoadItems()
         {

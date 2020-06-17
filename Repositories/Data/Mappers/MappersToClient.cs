@@ -26,5 +26,35 @@ namespace Repositories.Data.Mappers
         {
             return new User(u.UserId, u.FirstName, u.LastName, u.Email, u.Passwd, u.IsAdmin, u.IsActive, u.Token);
         }
+
+        public static Reservation ToClient(this G.Reservation r)
+        {
+            return new Reservation
+            {
+                ReservationId = r.ReservationId,
+                UserId = r.UserId,
+                EventId = r.EventId,
+                FactureDate = r.FactureDate,
+                NbTicket = r.NbTicket,
+                FactureTotal = r.FactureTotal,
+                NumTransactionValidee = r.NumTransactionValidee
+            };
+        }
+
+        public static Reservation_User_Event ToClient(this G.Reservation_User_Event r)
+        {
+            return new Reservation_User_Event
+            {
+                ReservationId = r.ReservationId,
+                UserId = r.UserId,
+                EventId = r.EventId,
+                FactureDate = r.FactureDate,
+                NbTicket = r.NbTicket,
+                FactureTotal = r.FactureTotal,
+                NumTransactionValidee = r.NumTransactionValidee,
+                User = r.User,
+                Event = r.Event
+            };
+        }
     }
 }

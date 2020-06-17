@@ -113,7 +113,7 @@ namespace Api_ASPCore.Repository.Services
             command.Parameters.AddWithValue("FirstName", entity.FirstName);
             command.Parameters.AddWithValue("LastName", entity.LastName);
             command.Parameters.AddWithValue("Email", entity.Email);
-            command.Parameters.AddWithValue("Passswd", entity.Passwd);
+            command.Parameters.AddWithValue("Passwd", entity.Passwd);
             command.Parameters.AddWithValue("IsAdmin", entity.IsAdmin);
             command.Parameters.AddWithValue("IsActive", entity.IsActive);
             return command.ExecuteNonQuery() == 1;

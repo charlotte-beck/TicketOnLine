@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PresentationWeb_ASPCore.Models;
+using PresentationWeb_ASPCore.Models.Mappers;
 using PresentationWeb_ASPCore.Utils;
 using PresentationWeb_ASPCore.Utils.CustomAttributes;
+using Repositories.Data;
 using D = Repositories.Data;
 
 namespace PresentationWeb_ASPCore.Controllers
@@ -17,22 +20,20 @@ namespace PresentationWeb_ASPCore.Controllers
     {
         private readonly IUserAPIRequester<D.User> _userRequester;
         private readonly ISessionManager _sessionManager;
-        //public int userId { get; set; }
 
         public UserController(IUserAPIRequester<D.User> userRepository, ISessionManager sessionManager) : base(sessionManager)
         {
             _userRequester = userRepository;
             _sessionManager = sessionManager;
-            //userId = _sessionManager.user.UserId;
         }
 
-        // GET: User
-        public ActionResult Index()
+        // GET: User/Details/5
+        public ActionResult Details(int userId)
         {
-            
-            return View(_userRequester.GetOneUser(_sessionManager.user.UserId));
+            userId = _sessionManager.user.UserId;
+            return View(_userRequester.GetOneUser(userId).ToWeb());
         }
-
+        
         // GET: User/Edit/5
         public ActionResult Edit(int userId)
         {
@@ -44,10 +45,12 @@ namespace PresentationWeb_ASPCore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int userId, UpdateUserForm updateUserForm)
         {
+            //D.User user = _sessionManager.user;
+            userId = _sessionManager.user.UserId;
             try
             {
                 // TODO: Add update logic here
-
+                _userRequester.UpdateUser(userId, new D.User(userId, updateUserForm.FirstName, updateUserForm.LastName, updateUserForm.Email, updateUserForm.Passwd, _sessionManager.user.IsActive, _sessionManager.user.IsAdmin, _sessionManager.user.Token));
                 return RedirectToAction(nameof(Details));
             }
             catch
@@ -56,21 +59,22 @@ namespace PresentationWeb_ASPCore.Controllers
             }
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(int userId)
-        {
-            return View();
-        }
+        //// GET: User/Delete/5
+        //public ActionResult Delete(int userId)
+        //{
+        //    return View();
+        //}
 
         // POST: User/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int userId)
         {
+            userId = _sessionManager.user.UserId;
             try
             {
                 // TODO: Add delete logic here
-
+                _userRequester.DeleteUser(userId);
                 return RedirectToAction("Register", "Auth");
             }
             catch
@@ -80,35 +84,35 @@ namespace PresentationWeb_ASPCore.Controllers
         }
 
         #region Reste CRUD
-        // GET: User/Details/5
-        public ActionResult Details(int userId)
-        {
-            //userId = _sessionManager.user.UserId;
-            return View(_userRequester.GetOneUser(userId));
-        }
-        
-        // GET: User/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: User
+        //public ActionResult Index()
+        //{
 
-        // POST: User/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        //    return View(_userRequester.GetOneUser(_sessionManager.user.UserId));
+        //}
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// GET: User/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //// POST: User/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
         #endregion
     }
 }
