@@ -4,18 +4,18 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Event</h1>
 
 <div>
     @*<h4>EventComment</h4>*@
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EventId)
-        </dt>
-        <dd class="col-sm-10">
+        </dt>*@
+        @*<dd class="col-sm-10">
             @Html.DisplayFor(model => model.EventId)
-        </dd>
+        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EventType)
         </dt>
@@ -60,38 +60,40 @@
         </dd>
     </dl>
 </div>
+<hr/>
 <div>
-    <h4>EventCommentList</h4>
+    <h4>Comment List</h4>
     <hr />
+
+    @foreach (var item in Model.CommentList)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.Display("User")
+            </dt>
+            <dd class="col-sm-10">
+                @item.User
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.Display("Comment Date")
+            </dt>
+            <dd class="col-sm-10">
+                @item.CommentDate
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.Display("Comment Content")
+            </dt>
+            <dd class="col-sm-10">
+                @item.CommentContent
+            </dd>
+        </dl>
+    }
     @if (ViewBag.IsLogged)
     {
-        @foreach (var item in Model.CommentList)
-        {
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.Display("User")
-                </dt>
-                <dd class="col-sm-10">
-                    @item.User
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.Display("Comment Date")
-                </dt>
-                <dd class="col-sm-10">
-                    @item.CommentDate
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.Display("Comment Content")
-                </dt>
-                <dd class="col-sm-10">
-                    @item.CommentContent
-                </dd>
-            </dl>
-        }
         <div>
             <form asp-action="AddComment">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

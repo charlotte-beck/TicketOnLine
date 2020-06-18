@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PresentationWeb_ASPCore.Models;
@@ -14,6 +15,7 @@ using D = Repositories.Data;
 
 namespace PresentationWeb_ASPCore.Controllers
 {
+
     public class EventController : ControllerBase
     {
         private readonly IEventAPIRequester<D.Event> _eventRequester;
@@ -26,19 +28,19 @@ namespace PresentationWeb_ASPCore.Controllers
             _commentRequester = commentRepository;
         }
 
-        // GET: Event
-        [AuthenticateRequired]
+
+        // GET: Event       
         public ActionResult Index()
         {
-            if (!(_sessionManager.user is null))
-            {
-                return View(_eventRequester.GetAllEvent().Where(e => e.EventDate >= DateTime.Now));
-            }
-            else
-            {
-                return View("Error");
-            }
-            
+            //if (!(_sessionManager.user is null))
+            //{
+            //    return View(_eventRequester.GetAllEvent().Where(e => e.EventDate >= DateTime.Now));
+            //}
+            //else
+            //{
+            //    return View("Index", "Home");
+            //}
+            return View(_eventRequester.GetAllEvent().Where(e => e.EventDate >= DateTime.Now));
         }
 
         // GET: Event/Details/5
@@ -61,6 +63,7 @@ namespace PresentationWeb_ASPCore.Controllers
             return View(ec);
         }
         
+        [AuthenticateRequired]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddComment(EventComment e)
@@ -78,16 +81,19 @@ namespace PresentationWeb_ASPCore.Controllers
                         CommentContent = e.CommentContent
                     };
                     _commentRequester.CreateComment(comment);
-                    //return RedirectToAction(nameof(Details), new { id = comment.EventId });
-                    return RedirectToAction("Details", new { eventId = comment.EventId });
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    return RedirectToAction("Details");
+                    return RedirectToAction("Index");
                 }
 
             }
-            return View("Error");
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         #region Reservation
