@@ -18,5 +18,18 @@ namespace PresentationWeb_ASPCore.Models.Mappers
                 Passwd = user.Passwd
             };
         }
+
+        public static Reservation_User_Event ToWeb(this D.Reservation_User_Event r)
+        {
+            return new Reservation_User_Event
+            {
+                FactureDate = r.FactureDate,
+                NbTicket = r.NbTicket,
+                FactureTotal = r.FactureTotal,
+                NumTransactionValidee = r.NumTransactionValidee,
+                Event = r.Event,
+                User = r.User
+            };
+        }
     }
 }

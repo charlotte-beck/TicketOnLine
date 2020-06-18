@@ -50,5 +50,17 @@ namespace Repositories.Data.Mappers
                 NumTransactionValidee = r.NumTransactionValidee
             };
         }
+
+        internal static g.Comment ToGlobal(this Comment c)
+        {
+            return new g.Comment
+            {
+                CommentId = c.CommentId,
+                UserId = c.UserId,
+                EventId = c.EventId,
+                CommentDate = c.CommentDate,
+                CommentContent = c.CommentContent
+            };
+        }
     }
 }

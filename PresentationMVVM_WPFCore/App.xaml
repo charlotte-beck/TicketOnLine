@@ -10,5 +10,6 @@
         <vm:AddEventViewModel x:Key="AddEvent"/>
         <vm:MainViewModel x:Key="Main"/>
         <vm:UserViewModel x:Key="User"/>
+        <vm:CommentByEventViewModel x:Key="Comment"/>
     </Application.Resources>
 </Application>

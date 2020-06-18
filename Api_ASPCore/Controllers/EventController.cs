@@ -38,22 +38,6 @@ namespace Api_ASPCore.Controllers
             return _eventRepository.GetOneEvent(eventId);
         }
 
-        //// GET: api/EventUser
-        //[Route("api/Event/{userId:int}")]
-        //[HttpGet]
-        //public IEnumerable<Event> GetAllByUserId(int userId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //// GET: api/EventUser/5
-        //[Route("api/Todo/{userId:int}/{eventId:int}")]
-        //[HttpGet("{eventId}", Name = "Get"),HttpGet("{userId}", Name = "Get")]
-        //public Event GetOneByUserId(int eventId, int userId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         //POST: api/Event
         [HttpPost]
         public Event Post([FromBody] Event entity)

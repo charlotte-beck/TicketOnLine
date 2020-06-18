@@ -4,67 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationMVVM_WPFCore.Views"
+        xmlns:vm="clr-namespace:PresentationMVVM_WPFCore.ViewModels"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="800" DataContext="{Binding User}">
+        Title="UserWindow" Height="450" Width="800" DataContext="{StaticResource User}" >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="9*"/>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Event"/>
-            <DataGrid Grid.Row="1" 
-                  ItemsSource="{Binding Items}" 
-                  SelectedItem="{Binding SelectedItem}"
-                  CanUserAddRows="False" 
-                  CanUserDeleteRows="False" 
-                  IsReadOnly="True"
-                  AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="User Name" Binding="{Binding Email}" IsReadOnly="True" Width="1*"/>
-                    <DataGridTemplateColumn IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="&#xE11A;" FontFamily="Segoe UI Symbol" Command="{Binding DetailsCommand}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-        <Grid Grid.Column="1">
-            <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="14" />
-                    <Setter Property="Padding" Value="5,0" />
-                    <Setter Property="TextAlignment" Value="Right" />
-                </Style>
-                <Style TargetType="TextBox">
-                    <Setter Property="FontSize" Value="14" />
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="6*"/>
-            </Grid.RowDefinitions>
-            <Label Grid.Column="0" Content="User Name"/>
-            <TextBox Grid.Column="1" Text="{Binding Email}"/>
-            <Label Grid.Column="0" Grid.Row="1" Content="Is Admin"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding IsAdmin}"/>
-            <Label Grid.Column="0" Grid.Row="2" Content="Is Active"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding IsActive}"/>
-            <Button Grid.Column ="0" Grid.Row="3" Content="Update" Grid.ColumnSpan="2" Command="{Binding UpdateStatusCommand}"/>
-        </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Users" FontFamily="Arial" FontSize="20px"/>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="LastName" Width="*" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="FirstName" Width="*" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridCheckBoxColumn Header="IsActive" Width="*" Binding="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" IsThreeState="False" />
+                <DataGridCheckBoxColumn Header="IsAdmin" Width="*" Binding="{Binding IsAdmin, UpdateSourceTrigger=PropertyChanged}" IsThreeState="False" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="&#xE149;" FontFamily="Segoe UI Symbol" Command="{Binding UpdateCommand}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

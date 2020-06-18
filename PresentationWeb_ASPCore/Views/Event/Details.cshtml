@@ -1,0 +1,123 @@
+﻿@model PresentationWeb_ASPCore.Models.EventComment
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    @*<h4>EventComment</h4>*@
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventOrg)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventOrg)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventLocation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventLocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventPrice)
+        </dd>
+    </dl>
+</div>
+<div>
+    <h4>EventCommentList</h4>
+    <hr />
+    @if (ViewBag.IsLogged)
+    {
+        @foreach (var item in Model.CommentList)
+        {
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.Display("User")
+                </dt>
+                <dd class="col-sm-10">
+                    @item.User
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.Display("Comment Date")
+                </dt>
+                <dd class="col-sm-10">
+                    @item.CommentDate
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.Display("Comment Content")
+                </dt>
+                <dd class="col-sm-10">
+                    @item.CommentContent
+                </dd>
+            </dl>
+        }
+        <div>
+            <form asp-action="AddComment">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="CommentId" type="hidden" />
+                <input asp-for="UserId" type="hidden" />
+                <input asp-for="EventId" type="hidden" />
+                <input asp-for="CommentDate" type="hidden" />
+                <input asp-for="User" type="hidden" />
+                <input asp-for="Event" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="CommentContent" class="control-label"></label>
+                    <input asp-for="CommentContent" class="form-control" />
+                    <span asp-validation-for="CommentContent" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Comment" class="btn btn-primary" />
+                </div>
+            </form>
+            @*@Html.ActionLink("Comment", "AddComment", new { eventId = Model.EventId, commentContent = })*@
+        </div>
+    }
+    @*<p>
+            <a asp-controller="Event" asp-action="Comment" asp-route-id="@ViewBag.EventId">Comment</a>
+        </p>*@
+</div>
+<div>
+    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
+    <a asp-action="Index">Back to List</a>
+</div>

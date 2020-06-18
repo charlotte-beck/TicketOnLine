@@ -1,0 +1,47 @@
+﻿<Window x:Class="PresentationMVVM_WPFCore.Views.CommentByEventWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PresentationMVVM_WPFCore.Views"
+        xmlns:vm="clr-namespace:PresentationMVVM_WPFCore.ViewModels"
+        mc:Ignorable="d"
+        Title="CommentByEventWindow" Height="450" Width="800" >
+    <Grid>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Comments by events" FontFamily="Arial" FontSize="20px"/>
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding Items}"
+                      SelectedItem="{Binding SelectedItem}"
+                      CanUserAddRows="False" 
+                    CanUserDeleteRows="False" 
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Event Name" Binding="{Binding Event}" IsReadOnly="True" Width="1*"/>
+                    <DataGridTextColumn Header="User Name" Binding="{Binding User}" IsReadOnly="True" Width="1*"/>
+                    <DataGridTextColumn Header="Comment Date" Binding="{Binding CommentDate}" IsReadOnly="True" Width="1*"/>
+                    <DataGridTextColumn Header="Comment Content" Binding="{Binding CommentContent}" IsReadOnly="True" Width="3*"/>
+                    <DataGridTemplateColumn IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" FontFamily="Segoe UI Symbol" Command="{Binding DeleteCommand}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Details" FontFamily="Segoe UI Symbol" Command="{Binding DetailsCommand}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

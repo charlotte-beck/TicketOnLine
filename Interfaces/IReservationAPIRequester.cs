@@ -6,9 +6,9 @@ namespace Interfaces
 {
     public interface IReservationAPIRequester<TEntity, T>
     {
-        IEnumerable<T> GetAllByEvent(int eventId);
+        IEnumerable<T> GetAllReservationByEvent(int eventId);
         T GetOneReservation(int reservationId);
-        IEnumerable<T> GetAllByUser(int userId);
+        IEnumerable<T> GetAllReservationByUser(int userId);
         TEntity CreateReservation(TEntity entity);
         //bool UpdateReservation(int reservationId, TEntity entity);
         //void DeleteReservation(int reservationId);

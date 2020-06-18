@@ -16,7 +16,6 @@ namespace PresentationMVVM_WPFCore.ViewModels
     public class EventViewModel : ViewModelCollectionBase<EventDetailViewModel>
     {
         private EventRepository _eventRepository;
-
         public EventViewModel()
         {
             _eventRepository = new EventRepository("http://localhost:56586/api/");
@@ -42,9 +41,6 @@ namespace PresentationMVVM_WPFCore.ViewModels
                 .Select(x => new EventDetailViewModel(x)));
             return events;
         }
-
-        
-
 
         #region Redirect to AddEvent Command
 

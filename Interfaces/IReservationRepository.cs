@@ -6,9 +6,9 @@ namespace Interfaces
 {
     public interface IReservationRepository<TEntity, T>
     {
-        List<T> GetAllByEvent(int eventId);
+        List<T> GetAllReservationByEvent(int eventId);
         T GetOneReservation(int reservationId);
-        List<T> GetAllByUser(int userId);
+        List<T> GetAllReservationByUser(int userId);
         TEntity CreateReservation(TEntity entity);
         //bool UpdateReservation(int reservationId, TEntity entity);
         //void DeleteReservation(int reservationId);

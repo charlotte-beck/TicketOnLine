@@ -119,15 +119,15 @@ namespace Api_ASPCore.Repository.Services
             return command.ExecuteNonQuery() == 1;
         }
 
-        public bool UpdateUserStatus(int userId, User entity)
-        {
-            SqlCommand command = _connection.CreateCommand();
-            command.CommandText = "dbo.SP_UpdateUserActiveOrAdmin";
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("UserId", userId);
-            command.Parameters.AddWithValue("IsAdmin", entity.IsAdmin);
-            command.Parameters.AddWithValue("IsActive", entity.IsActive);
-            return command.ExecuteNonQuery() == 1;
-        }
+        //public bool UpdateUserStatus(int userId, User entity)
+        //{
+        //    SqlCommand command = _connection.CreateCommand();
+        //    command.CommandText = "dbo.SP_UpdateUserActiveOrAdmin";
+        //    command.CommandType = CommandType.StoredProcedure;
+        //    command.Parameters.AddWithValue("UserId", userId);
+        //    command.Parameters.AddWithValue("IsAdmin", entity.IsAdmin);
+        //    command.Parameters.AddWithValue("IsActive", entity.IsActive);
+        //    return command.ExecuteNonQuery() == 1;
+        //}
     }
 }

@@ -14,14 +14,14 @@ namespace Repositories.APIRequester
         private readonly HttpClient _httpClient;
         public PublicKeyRequester(Uri baseAddress)
         {
-            HttpClientHandler handler = new HttpClientHandler()
-            {
-                SslProtocols = SslProtocols.Default
-            };
+            //HttpClientHandler handler = new HttpClientHandler()
+            //{
+            //    SslProtocols = SslProtocols.Default
+            //};
 
-            handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) => true;
+            //handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) => true;
 
-            _httpClient = new HttpClient(handler);
+            _httpClient = new HttpClient();
             _httpClient.BaseAddress = baseAddress;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

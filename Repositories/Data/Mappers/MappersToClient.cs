@@ -56,5 +56,31 @@ namespace Repositories.Data.Mappers
                 Event = r.Event
             };
         }
+
+        public static Comment ToClient(this G.Comment c)
+        {
+            return new Comment
+            {
+                CommentId = c.CommentId,
+                UserId = c.UserId,
+                EventId = c.EventId,
+                CommentDate = c.CommentDate,
+                CommentContent = c.CommentContent
+            };
+        }
+
+        public static Comment_User_Event ToClient(this G.Comment_User_Event c)
+        {
+            return new Comment_User_Event
+            {
+                CommentId = c.CommentId,
+                UserId = c.UserId,
+                EventId = c.EventId,
+                CommentDate = c.CommentDate,
+                CommentContent = c.CommentContent,
+                User = c.User,
+                Event = c.Event
+            };
+        }
     }
 }

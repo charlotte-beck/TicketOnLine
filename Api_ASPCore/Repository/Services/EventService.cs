@@ -141,17 +141,5 @@ namespace Api_ASPCore.Repository.Services
             return e;
         }
         #endregion
-
-        #region Get EventByUser ASP
-        public List<Event> GetAllByUser(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Event GetOneByUser(int userId, int eventId)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

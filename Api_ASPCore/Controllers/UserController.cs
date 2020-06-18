@@ -49,8 +49,6 @@ namespace Api_ASPCore.Controllers
             _userRepository.UpdateUser(userId, entity);
         }
 
-        
-
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{userId}")]
         public void Delete(int userId)

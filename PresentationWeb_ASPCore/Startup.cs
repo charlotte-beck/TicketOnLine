@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PresentationWeb_ASPCore.Utils;
 using Repositories;
+using Repositories.APIRequester;
 using Repositories.Data;
 using Repositories.Data.Forms;
 
@@ -29,9 +30,8 @@ namespace PresentationWeb_ASPCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDistributedMemoryCache();
+            
             services.AddHttpContextAccessor();
-
             services.AddTransient<ISessionManager, SessionManager>();
             services.AddSession(options =>
             {
@@ -40,14 +40,15 @@ namespace PresentationWeb_ASPCore
                 options.Cookie.IsEssential = true;
             });
 
-            //services.AddScoped<ICryptoRSA, CryptoRSA>(c => new CryptoRSA());
-
-            services.AddSingleton(p => new string("http://localhost:56586/api/"));
-          
+            services.AddSingleton(p => new string("http://localhost:56586/api/"));          
             services.AddSingleton<IAuthAPIRequester<RegisterForm, LoginForm, User>, AuthRepository>();
             services.AddSingleton<IUserAPIRequester<User>, UserRepository>();
             services.AddSingleton<IEventAPIRequester<Event>, EventRepository>();
+            services.AddSingleton<ICommentAPIRequester<Comment, Comment_User_Event>, CommentRequester>();
+            services.AddSingleton<IReservationAPIRequester<Reservation, Reservation_User_Event>, ReservationRepository>();
 
+            //services.AddScoped<ICryptoRSA, CryptoRSA>(c => new CryptoRSA());
+            services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

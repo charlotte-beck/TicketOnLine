@@ -18,17 +18,17 @@ namespace Repositories.APIRequester
         private readonly HttpClient _httpClient;
         public ReservationRepository(string url)
         {
-            var handler = new HttpClientHandler
-            {
-                SslProtocols = SslProtocols.Default
-            };
+            //var handler = new HttpClientHandler
+            //{
+            //    SslProtocols = SslProtocols.Default
+            //};
 
-            handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
-            {
-                return true;
-            };
+            //handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
+            //{
+            //    return true;
+            //};
 
-            _httpClient = new HttpClient(handler);
+            _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -46,7 +46,7 @@ namespace Repositories.APIRequester
             return JsonConvert.DeserializeObject<G.Reservation>(json).ToClient();
         }
 
-        public IEnumerable<Reservation_User_Event> GetAllByEvent(int eventId)
+        public IEnumerable<Reservation_User_Event> GetAllReservationByEvent(int eventId)
         {
             HttpResponseMessage responseMessage = _httpClient.GetAsync($"reservation/event/{eventId}").Result;
             responseMessage.EnsureSuccessStatusCode();
@@ -56,7 +56,7 @@ namespace Repositories.APIRequester
             return JsonConvert.DeserializeObject<G.Reservation_User_Event[]>(json).Select(ev => ev.ToClient());
         }
 
-        public IEnumerable<Reservation_User_Event> GetAllByUser(int userId)
+        public IEnumerable<Reservation_User_Event> GetAllReservationByUser(int userId)
         {
             HttpResponseMessage responseMessage = _httpClient.GetAsync($"reservation/user/{userId}").Result;
             responseMessage.EnsureSuccessStatusCode();

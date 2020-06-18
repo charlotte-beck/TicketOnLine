@@ -21,24 +21,24 @@ namespace Api_ASPCore.Controllers
         }
 
         // GET: api/Reservation/user/5
-        [HttpGet("user/{userId}", Name = "GetAllByUser")]
-        public IEnumerable<Reservation_User_Event> GetByUser(int userId)
+        [HttpGet("user/{userId}", Name = "GetAllReservationByUser")]
+        public IEnumerable<Reservation_User_Event> GetReservationByUser(int userId)
         {
-            return _reservationRepository.GetAllByUser(userId);
+            return _reservationRepository.GetAllReservationByUser(userId);
         }
 
         // GET: api/Reservation/event/5
-        [HttpGet("event/{eventId}", Name = "GetAllByEvent")]
-        public IEnumerable<Reservation_User_Event> GetByEvent(int eventId)
+        [HttpGet("event/{eventId}", Name = "GetAllReservationByEvent")]
+        public IEnumerable<Reservation_User_Event> GetReservationByEvent(int eventId)
         {
-            return _reservationRepository.GetAllByEvent(eventId);
+            return _reservationRepository.GetAllReservationByEvent(eventId);
         }
 
         // GET: api/Reservation/5
-        [HttpGet("{reservationid}", Name = "Get")]
+        [HttpGet("{reservationid}", Name = "GetOneReservation")]
         public Reservation_User_Event Get(int reservationId)
         {
-            return _reservationRepository.GetOneReservation(reservationId)
+            return _reservationRepository.GetOneReservation(reservationId);
         }
 
         // POST: api/Reservation

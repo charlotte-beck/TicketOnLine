@@ -43,7 +43,7 @@ namespace Api_ASPCore.Repository.Services
             return entity;
         }
 
-        public List<Reservation_User_Event> GetAllByUser(int userId)
+        public List<Reservation_User_Event> GetAllReservationByUser(int userId)
         {
             List<Reservation_User_Event> reservations = new List<Reservation_User_Event>();
             SqlCommand command = _connection.CreateCommand();
@@ -62,6 +62,7 @@ namespace Api_ASPCore.Repository.Services
                         FactureDate = (DateTime)dr["FactureDate"],
                         NbTicket = (int)dr["NbTicket"],
                         FactureTotal = (double)dr["FactureTotal"],
+                        NumTransactionValidee = (int)dr["NumTransactionValidee"],
                         User = (string)dr["User"],
                         Event = (string)dr["Event"]
                     });
@@ -70,7 +71,7 @@ namespace Api_ASPCore.Repository.Services
             return reservations;
         }
 
-        public List<Reservation_User_Event> GetAllByEvent(int eventId)
+        public List<Reservation_User_Event> GetAllReservationByEvent(int eventId)
         {
             List<Reservation_User_Event> reservations = new List<Reservation_User_Event>();
             SqlCommand command = _connection.CreateCommand();
@@ -89,6 +90,7 @@ namespace Api_ASPCore.Repository.Services
                         FactureDate = (DateTime)dr["FactureDate"],
                         NbTicket = (int)dr["NbTicket"],
                         FactureTotal = (double)dr["FactureTotal"],
+                        NumTransactionValidee = (int)dr["NumTransactionValidee"],
                         User = (string)dr["User"],
                         Event = (string)dr["Event"]
                     });
@@ -101,7 +103,7 @@ namespace Api_ASPCore.Repository.Services
         {
             Reservation_User_Event reservation = new Reservation_User_Event();
             SqlCommand command = _connection.CreateCommand();
-            command.CommandText = "dbo.SP_GetOneReservation";
+            command.CommandText = "dbo.SP_GetReservation";
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@ReservationId", reservationId);
             using (SqlDataReader dr = command.ExecuteReader())
@@ -114,6 +116,7 @@ namespace Api_ASPCore.Repository.Services
                     reservation.FactureDate = (DateTime)dr["FactureDate"];
                     reservation.NbTicket = (int)dr["NbTicket"];
                     reservation.FactureTotal = (double)dr["FactureTotal"];
+                    reservation.NumTransactionValidee = (int)dr["NumTransactionValidee"];
                     reservation.User = (string)dr["User"];
                     reservation.Event = (string)dr["Event"];
                 }

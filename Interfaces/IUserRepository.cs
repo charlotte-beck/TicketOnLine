@@ -11,7 +11,5 @@ namespace Interfaces
         TEntity CreateUser(TEntity entity);
         bool UpdateUser(int userId, TEntity entity);
         void DeleteUser(int userId);
-
-        bool UpdateUserStatus(int userId, TEntity entity);
     }
 }

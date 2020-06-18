@@ -8,14 +8,6 @@ namespace PresentationMVVM_WPFCore.ViewModels
 {
     public class MainViewModel
     {
-        //public void Details()
-        //{
-        //    EventDetailsWindow dw = new EventDetailsWindow();
-        //    dw.DataContext = this;
-
-        //    dw.Show();
-        //}
-
         private RelayCommand _toEventCommand;
         public RelayCommand ToEventCommand
         {

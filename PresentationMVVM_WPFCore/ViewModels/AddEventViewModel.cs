@@ -112,32 +112,12 @@ namespace PresentationMVVM_WPFCore.ViewModels
         #endregion
 
         private EventRepository _eventRepository;
-
-
         public AddEventViewModel()
         {
             _eventRepository = new EventRepository("http://localhost:56586/api/");
-
-
         }
-        //private ICommand _closeWindowCommand;
-        //public ICommand CloseWindowCommand
-        //{
-        //    get
-        //    {
-        //        return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(CloseWindow));
-        //    }
-        //}
 
-
-        //private void CloseWindow()
-        //{
-        //    IClosable window = new AddEventWindow();
-        //    if (window != null)
-        //    {
-        //        window.Close();
-        //    }
-        //}
+        #region Command Add
 
         private ICommand _addCommand;
         public ICommand AddCommand
@@ -175,13 +155,14 @@ namespace PresentationMVVM_WPFCore.ViewModels
             _eventRepository.CreateEvent(e);
             Items = LoadItems();
             Messenger<Event>.Instance.Send(e);
-            //Items.Add(new EventDetailViewModel(e));
             EventName = EventType = EventDescription = EventOrg = EventLocation = null;
             EventDate = DateTime.Now;
             EventPrice = 0;
+            
             AddEventWindow addEventWindow = App.Current.Windows.OfType<AddEventWindow>().FirstOrDefault();
             addEventWindow.Close();
         }
+        #endregion
 
         protected override ObservableCollection<EventDetailViewModel> LoadItems()
         {
@@ -190,5 +171,26 @@ namespace PresentationMVVM_WPFCore.ViewModels
                 .Select(x => new EventDetailViewModel(x)));
             return events;
         }
+
+        #region CloseWindow (test)
+        //private ICommand _closeWindowCommand;
+        //public ICommand CloseWindowCommand
+        //{
+        //    get
+        //    {
+        //        return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(CloseWindow));
+        //    }
+        //}
+
+
+        //private void CloseWindow()
+        //{
+        //    IClosable window = new AddEventWindow();
+        //    if (window != null)
+        //    {
+        //        window.Close();
+        //    }
+        //}
+        #endregion
     }
 }

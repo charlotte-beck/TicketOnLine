@@ -5,21 +5,25 @@ using System.Threading.Tasks;
 using Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PresentationWeb_ASPCore.Models;
 using PresentationWeb_ASPCore.Utils;
 using PresentationWeb_ASPCore.Utils.CustomAttributes;
 using Repositories;
 using Repositories.Data;
+using D = Repositories.Data;
 
 namespace PresentationWeb_ASPCore.Controllers
 {
     public class EventController : ControllerBase
     {
-        private readonly IEventAPIRequester<Event> _eventRequester;
+        private readonly IEventAPIRequester<D.Event> _eventRequester;
+        private readonly ICommentAPIRequester<D.Comment, D.Comment_User_Event> _commentRequester;
         private readonly ISessionManager _sessionManager;
-        public EventController(IEventAPIRequester<Event> eventRepository, ISessionManager sessionManager) : base(sessionManager)
+        public EventController(IEventAPIRequester<D.Event> eventRepository, ICommentAPIRequester<D.Comment, D.Comment_User_Event> commentRepository, ISessionManager sessionManager) : base(sessionManager)
         {
             _sessionManager = sessionManager;
             _eventRequester = eventRepository;
+            _commentRequester = commentRepository;
         }
 
         // GET: Event
@@ -38,10 +42,74 @@ namespace PresentationWeb_ASPCore.Controllers
         }
 
         // GET: Event/Details/5
-        public ActionResult Details(int eventId)
+        public ActionResult Details(int id)
         {
-            return View(_eventRequester.GetOneEvent(eventId));
+            D.Event e = _eventRequester.GetOneEvent(id);
+            EventComment ec = new EventComment
+            {
+                EventId = e.EventId,
+                EventType = e.EventType,
+                EventName = e.EventName,
+                EventDescription = e.EventDescription,
+                EventOrg = e.EventOrg,
+                EventLocation = e.EventLocation,
+                EventDate = e.EventDate,
+                EventPrice = e.EventPrice,
+                CommentList = _commentRequester.GetAllCommentByEvent(id).ToList()
+    };
+
+            return View(ec);
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddComment(EventComment e)
+        {
+
+            if (!(SessionManager.user is null))
+            {
+                if (ModelState.IsValid)
+                {
+                    Comment comment = new Comment
+                    {
+                        UserId = _sessionManager.user.UserId,
+                        EventId = e.EventId,
+                        CommentDate = DateTime.Now,
+                        CommentContent = e.CommentContent
+                    };
+                    _commentRequester.CreateComment(comment);
+                    //return RedirectToAction(nameof(Details), new { id = comment.EventId });
+                    return RedirectToAction("Details", new { eventId = comment.EventId });
+                }
+                else
+                {
+                    return RedirectToAction("Details");
+                }
+
+            }
+            return View("Error");
+        }
+
+        #region Reservation
+        //public ActionResult ToReservation(double eventPrice, int eventId, int nbTicket)
+        //{
+        //    return View(new D.Reservation()
+        //    {
+        //        UserId = SessionManager.user.UserId,
+        //        EventId = eventId,
+        //        NbTicket = nbTicket,
+        //        FactureTotal = eventPrice*nbTicket,
+        //        FactureDate = DateTime.Now
+        //    });
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult ToReservation(Reservation reservation)
+        //{
+
+        //}
+        #endregion
 
         #region Reste CRUD
         //// GET: Event/Create

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls.Primitives;
 using Interfaces;
@@ -15,6 +16,11 @@ namespace PresentationMVVM_WPFCore.ViewModels
     public class EventDetailViewModel : EntityViewModelBase<Event>
     {
         #region Properties
+        public int EventId
+        {
+            get { return Entity.EventId; }
+        }
+
         private string _eventName;
         public string EventName
         {
@@ -122,10 +128,26 @@ namespace PresentationMVVM_WPFCore.ViewModels
             EventPrice = Entity.EventPrice;
             _eventRepository = new EventRepository("http://localhost:56586/api/");
         }
-        public int EventId
+        
+        #region Redirect to CommentByEvent Command
+
+        private RelayCommand _toCommentByEventCommand;
+        public RelayCommand ToCommentByEventCommand
         {
-            get { return Entity.EventId; }
+            get
+            {
+                return _toCommentByEventCommand ?? (_toCommentByEventCommand = new RelayCommand(GoToCommentByEventWindow));
+            }
         }
+        public void GoToCommentByEventWindow()
+        {
+
+            CommentByEventWindow commentByEventWindow = new CommentByEventWindow(EventId);
+            //commentByEventWindow.DataContext = this;
+            commentByEventWindow.Show();
+        }
+        #endregion
+
         #region Update Command
 
         private RelayCommand _updateCommand;
@@ -164,6 +186,9 @@ namespace PresentationMVVM_WPFCore.ViewModels
             Entity.EventDate = EventDate;
             Entity.EventPrice = EventPrice;
 
+            _eventRepository.UpdateEvent(EventId, Entity);
+            UpdateCommand.RaiseCanExecuteChanged();
+
             if (!_eventRepository.UpdateEvent(EventId, Entity))
             {
                 Entity.EventName = oldName;
@@ -174,10 +199,14 @@ namespace PresentationMVVM_WPFCore.ViewModels
                 Entity.EventDate = oldDate;
                 Entity.EventPrice = oldPrice;
             }
+
+            EventDetailsWindow eventDetailsWindow = App.Current.Windows.OfType<EventDetailsWindow>().FirstOrDefault();
+            eventDetailsWindow.Close();
         }
         #endregion
-        #region Command    
 
+        #region Command Delete  
+        
         private RelayCommand _deleteCommand;
         public RelayCommand DeleteCommand
         {
@@ -191,6 +220,9 @@ namespace PresentationMVVM_WPFCore.ViewModels
             _eventRepository.DeleteEvent(EventId);
             Messenger<Event>.Instance.Send(Entity);
         }
+        #endregion
+
+        #region Command Details
 
         private RelayCommand _detailsCommand;
         public RelayCommand DetailsCommand
@@ -202,7 +234,11 @@ namespace PresentationMVVM_WPFCore.ViewModels
         }
         private void ShowDetails()
         {
-            _eventRepository.GetOneEvent(EventId);
+            EventDetailsWindow edw = new EventDetailsWindow();
+            edw.DataContext = this;
+
+            edw.Show();
+            //_eventRepository.GetOneEvent(EventId);
         }        
         #endregion
     }

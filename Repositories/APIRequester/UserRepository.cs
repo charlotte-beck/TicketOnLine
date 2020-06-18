@@ -19,17 +19,17 @@ namespace Repositories
 
         public UserRepository(string url)
         {
-            var handler = new HttpClientHandler
-            {
-                SslProtocols = SslProtocols.Default
-            };
+            //var handler = new HttpClientHandler
+            //{
+            //    SslProtocols = SslProtocols.Default
+            //};
 
-            handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
-            {
-                return true;
-            };
+            //handler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
+            //{
+            //    return true;
+            //};
             
-            _httpClient = new HttpClient(handler);
+            _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(url);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -56,7 +56,7 @@ namespace Repositories
 
         public IEnumerable<User> GetAllUser()
         {
-            HttpResponseMessage responseMessage = _httpClient.GetAsync("user/").Result;
+            HttpResponseMessage responseMessage = _httpClient.GetAsync("user").Result;
             responseMessage.EnsureSuccessStatusCode();
 
             string json = responseMessage.Content.ReadAsStringAsync().Result;

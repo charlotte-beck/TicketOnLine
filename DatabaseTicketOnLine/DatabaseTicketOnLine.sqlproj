@@ -63,6 +63,7 @@
     <Folder Include="Stored Procedures\User" />
     <Folder Include="Stored Procedures\Reservation" />
     <Folder Include="Stored Procedures\Authenticate" />
+    <Folder Include="Stored Procedures\Comment" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\User.sql" />
@@ -89,6 +90,13 @@
     <Build Include="Stored Procedures\Reservation\SP_GetReservation.sql" />
     <Build Include="Stored Procedures\Reservation\SP_GetAllReservation_User.sql" />
     <Build Include="Stored Procedures\Reservation\SP_GetAllReservation_Event.sql" />
+    <Build Include="Tables\Comment.sql" />
+    <Build Include="Stored Procedures\Comment\SP_CreateComment.sql" />
+    <Build Include="Stored Procedures\Comment\SP_UpdateComment.sql" />
+    <Build Include="Stored Procedures\Comment\SP_GetComment.sql" />
+    <Build Include="Stored Procedures\Comment\SP_GetAllComment_Event.sql" />
+    <Build Include="Stored Procedures\Comment\SP_GetAllComment_User.sql" />
+    <Build Include="Stored Procedures\Comment\SP_DeleteComment.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DatabaseTicketOnLine.publish.xml" />

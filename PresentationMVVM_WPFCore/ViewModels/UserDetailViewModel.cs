@@ -1,9 +1,11 @@
 ﻿using PresentationMVVM_WPFCore.Utils.Command;
 using PresentationMVVM_WPFCore.ViewModels.ViewModelsBase;
+using PresentationMVVM_WPFCore.Views;
 using Repositories;
 using Repositories.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PresentationMVVM_WPFCore.ViewModels
@@ -16,60 +18,29 @@ namespace PresentationMVVM_WPFCore.ViewModels
             get { return Entity.UserId; }
         }
 
-        private string _firstName;
         public string FirstName
         {
-            get { return _firstName; }
-            set
-            {
-                if (_firstName != value)
-                {
-                    _firstName = value;
-                    RaisePropertyChanged(nameof(FirstName));
-                }
-            }
+            get { return Entity.FirstName; }
         }
 
-        private string _lastName;
         public string LastName
         {
-            get { return _lastName; }
-            set
-            {
-                if (_lastName != value)
-                {
-                    _lastName = value;
-                    RaisePropertyChanged(nameof(LastName));
-                }
-            }
+            get { return Entity.LastName; }
         }
 
-        private string _email;
         public string Email
         {
-            get { return _email; }
-            set
-            {
-                if (_email != value)
-                {
-                    _email = value;
-                    RaisePropertyChanged(nameof(Email));
-                }
-            }
+            get { return Entity.Email; }
         }
 
-        private string _passwd;
         public string Passwd
         {
-            get { return _passwd; }
-            set
-            {
-                if (_passwd != value)
-                {
-                    _passwd = value;
-                    RaisePropertyChanged(nameof(Passwd));
-                }
-            }
+            get { return Entity.Passwd; }
+        }
+
+        public string Token
+        {
+            get { return Entity.Token; }
         }
 
         private bool _isAdmin;
@@ -102,48 +73,14 @@ namespace PresentationMVVM_WPFCore.ViewModels
         #endregion
 
         private UserRepository _userRepository;
-
         public UserDetailViewModel(User entity) : base(entity)
         {
-            FirstName = Entity.FirstName;
-            LastName = Entity.LastName;
-            Email = Entity.Email;
             IsActive = Entity.IsActive;
             IsAdmin = Entity.IsAdmin;
             _userRepository = new UserRepository("http://localhost:56586/api/");
         }
 
-        #region Command
-
-        //private RelayCommand _deleteCommand;
-        //public RelayCommand DeleteCommand
-        //{
-        //    get
-        //    {
-        //        return _deleteCommand ?? (_deleteCommand = new RelayCommand(Delete));
-        //    }
-        //}
-        //private void Delete()
-        //{
-        //    _userRepository.DeleteUser(UserId);
-        //    //Messenger<DeleteEventMessage>.Instance.Send(new DeleteEventMessage(this));
-        //}
-
-        private RelayCommand _detailsCommand;
-        public RelayCommand DetailsCommand
-        {
-            get
-            {
-                return _detailsCommand ?? (_detailsCommand = new RelayCommand(ShowDetails));
-            }
-        }
-        private void ShowDetails()
-        {
-            _userRepository.GetOneUser(UserId);
-        }
-        #endregion
-
-        #region Update Command
+        #region Command Update
 
         private RelayCommand _updateCommand;
         public RelayCommand UpdateCommand
@@ -180,7 +117,10 @@ namespace PresentationMVVM_WPFCore.ViewModels
             Entity.IsAdmin = IsAdmin;
             Entity.IsActive = IsActive;
 
-            if (!_userRepository.UpdateUserStatus(UserId, Entity))
+            _userRepository.UpdateUser(UserId, Entity);
+            UpdateCommand.RaiseCanExecuteChanged();
+
+            if (!_userRepository.UpdateUser(UserId, Entity))
             {
                 //Entity.FirstName = oldFirstName;
                 //Entity.LastName = oldLastName;
@@ -190,6 +130,40 @@ namespace PresentationMVVM_WPFCore.ViewModels
                 Entity.IsActive = oldIsActive;
             }
         }
+        #endregion
+
+        #region Command
+
+        //private RelayCommand _detailsCommand;
+        //public RelayCommand DetailsCommand
+        //{
+        //    get
+        //    {
+        //        return _detailsCommand ?? (_detailsCommand = new RelayCommand(ShowDetails));
+        //    }
+        //}
+        //private void ShowDetails()
+        //{
+        //    UserDetailsWindow udw = new UserDetailsWindow();
+        //    udw.DataContext = this;
+
+        //    udw.Show();
+        //    //_userRepository.GetOneUser(UserId);
+        //}
+
+        //private RelayCommand _deleteCommand;
+        //public RelayCommand DeleteCommand
+        //{
+        //    get
+        //    {
+        //        return _deleteCommand ?? (_deleteCommand = new RelayCommand(Delete));
+        //    }
+        //}
+        //private void Delete()
+        //{
+        //    _userRepository.DeleteUser(UserId);
+        //    //Messenger<DeleteEventMessage>.Instance.Send(new DeleteEventMessage(this));
+        //}
         #endregion
     }
 }
